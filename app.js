@@ -159,14 +159,12 @@ process.on('uncaughtException', (err) => {
 mongoose
   .connect(MONGO_URI)
   .then(() => {
-    console.log('✅ MongoDB Connected');
+    console.log('✅ ');
 
-    // شغل السيرفر بعد ما DB تتوصل
     app.listen(port, () => {
       console.log(` app listening at http://localhost:${port}`);
     });
   })
   .catch((err) => console.error('❌ MongoDB Error:', err));
 
-// Start the server
-export default app;
+ export default app;

@@ -1,0 +1,101 @@
+extends base
+
+block content
+
+  // Hero Section
+  section.hero
+    .hero-overlay
+    .hero-content
+      h2.hero-title أطباق الكبدة والسجق الطازجة
+      a.btn.btn-primary(href="/menu") اطلب الآن
+
+  // About Section
+  section.about
+    .container
+      .section-header
+        h2 حكاية يا كبدة
+        .divider
+      .about-content
+        .about-text
+          h3 طعم بدأ حكاية
+          p
+            | في «يا كبدة» بنحكي حكاية طعم مصري أصيل، بدأ من حبنا للكبدة والسجق السكندري على أصوله.
+            | بنقدّم لك أطباق متحضّرة بنفس الروح الشعبية، باستخدام كبدة طازة يوميًا وسجق متتبّل بتوليفة توابل خاصة.
+          p
+            | هدفنا إن كل وجبة تعيشك تجربة حقيقية، من أول لقمة لآخرها، بطعم ثابت وجودة نلتزم بيها كل يوم.
+            | في «يا كبدة»… الطعم مش أكل وبس، ده حكاية.
+          .about-features
+            .feature-item
+              .feature-icon 🔥
+              h4 طازج يومياً
+              p نستخدم مكونات طازجة 100٪
+            .feature-item
+              .feature-icon ⭐
+              h4 جودة عالية
+              p أفضل تتبيلة وأجود لحوم
+            .feature-item
+              .feature-icon 🚀
+              h4 توصيل سريع
+              p توصيل لباب البيت في أسرع وقت
+        .about-image
+          img(src="/img/kebda.jpg" alt="كبدة إسكندراني")
+
+  // Featured Products
+  section.featured-products
+    .container
+      .section-header
+        h2 المنتجات المميزة
+        .divider
+        p أشهى الأطباق من المطبخ المصري الأصيل
+
+      .products-grid
+        // Product 1
+        .product-card
+          .product-image
+            img(src="https://images.unsplash.com/photo-1529692236671-f1f6cf9683ba?w=500" alt="كبدة إسكندراني")
+            span.product-badge الأكثر مبيعاً
+          .product-info
+            h3 كبدة إسكندراني
+            p كبدة طازجة متبلة على الطريقة الإسكندرانية الأصيلة مع الطحينة والليمون
+            .product-footer
+              .product-price
+                span.price 349
+                span.currency جنيه
+              button.btn.btn-add-cart(
+                onclick="addToCart('كبدة إسكندراني', 349, 'https://images.unsplash.com/photo-1529692236671-f1f6cf9683ba?w=500')"
+              ) أضف للسلة
+
+        // Product 2
+        .product-card
+          .product-image
+            img(src="https://images.unsplash.com/photo-1588168333986-5078d3ae3976?w=500" alt="سجق بلدي")
+            span.product-badge الأكثر مبيعاً
+          .product-info
+            h3 سجق بلدي
+            p سجق بلدي طازج متبل بأفضل التوابل المصرية الأصيلة
+            .product-footer
+              .product-price
+                span.price 299
+                span.currency جنيه
+              button.btn.btn-add-cart(
+                onclick="addToCart('سجق بلدي', 299, 'https://images.unsplash.com/photo-1588168333986-5078d3ae3976?w=500')"
+              ) أضف للسلة
+
+        // Product 3
+        .product-card
+          .product-image
+            img(src="https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?w=500" alt="كبدة بالطحينة")
+            span.product-badge الأكثر مبيعاً
+          .product-info
+            h3 كبدة بالطحينة
+            p كبدة طازجة مع صوص الطحينة الشهي والبقدونس
+            .product-footer
+              .product-price
+                span.price 329
+                span.currency جنيه
+              button.btn.btn-add-cart(
+                onclick="addToCart('كبدة بالطحينة', 329, 'https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?w=500')"
+              ) أضف للسلة
+
+      .section-cta
+        a.btn.btn-outline(href="menu") عرض جميع المنتجات

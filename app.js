@@ -26,7 +26,6 @@ const port = process.env.PORT || 3000;
 // حل مشكلة __dirname في ES Modules
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-console.log('🔍 VIEWS DIR =', app.get('views'));
 
 app.use(express.urlencoded({ extended: true, limit: '10kb' }));
 app.use(express.json());
@@ -58,8 +57,6 @@ app.use(mongoSanitize());
 app.use(xss());
 
 //-----------------------------------------------------------------------------------------
-// app.use(morgan('dev'));
-
 app.use((req, res, next) => {
   req.requestTime = new Date().toISOString();
   next();
@@ -79,8 +76,6 @@ app.use(compression());
 //--------------------------------------------------------------------------------------------
 // =================================== The Routes ============================================
 //--------------------------------------------------------------------------------------------
-// ✅ Middleware لتمرير Stripe key لكل الصفحات
-
 app.get('/.well-known/*', (req, res) => res.status(204).end());
 
 app.use('/api/v1/meal', mealRouter);
@@ -89,36 +84,17 @@ app.use('/api/v1/order', orderRouter);
 app.use('/', viewRouter);
 app.use('/admin', adminRouter);
 
-app.use((err, req, res, next) => {
-  err.statusCode = err.statusCode || 500;
-  err.status = err.status || 'error';
-
-  // For rendered pages
-  if (req.originalUrl.startsWith('/')) {
-    return res.status(err.statusCode).render('error', {
-      title: 'Something went wrong!',
-      message: err.message,
-      error: err,
-    });
-  }
-
-  // For API routes
-  res.status(err.statusCode).json({
-    status: err.status,
-    message: err.message,
-  });
-});
-
 // 404 handler للـ routes اللي مش موجودة
 app.all('*', (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
 });
 
-// Global error handler (في الآخر!)
+// ✅ Global error handler (واحد بس!)
 app.use((err, req, res, next) => {
   err.statusCode = err.statusCode || 500;
   err.status = err.status || 'error';
 
+  // ✅ للـ API routes - ارجع JSON
   if (req.originalUrl.startsWith('/api')) {
     return res.status(err.statusCode).json({
       status: err.status,
@@ -126,7 +102,7 @@ app.use((err, req, res, next) => {
     });
   }
 
-  // عرض صفحة error
+  // ✅ للـ rendered pages - ارجع HTML
   res.status(err.statusCode).render('error', {
     title: 'Something went wrong!',
     msg: err.message,

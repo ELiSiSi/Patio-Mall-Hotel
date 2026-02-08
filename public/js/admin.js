@@ -153,7 +153,7 @@ function showEditMealForm(meal) {
 function showEditOfferForm(offer) {
   const modal = document.getElementById('editOfferModal');
   document.getElementById('editOfferId').value = offer._id;
-  document.getElementById('editOfferTitle').value = offer.title;
+  document.getElementById('editOfferTitle').value = offer.name;
   document.getElementById('editOfferPrice').value = offer.price;
   document.getElementById('editOfferNewPrice').value = offer.newprice || '';
   document.getElementById('editOfferDescription').value =
@@ -236,7 +236,7 @@ async function updateOffer(event) {
 
   const id = document.getElementById('editOfferId').value;
   const data = {
-    title: document.getElementById('editOfferTitle').value,
+    name: document.getElementById('editOfferTitle').value,
     price: parseFloat(document.getElementById('editOfferPrice').value),
     description: document.getElementById('editOfferDescription').value,
     image: document.getElementById('editOfferImage').value,
@@ -312,18 +312,21 @@ async function addMeal(event) {
 async function addOffer(event) {
   event.preventDefault();
 
+  const imageValue = document.getElementById('addOfferImage').value.trim();
+
   const data = {
-    title: document.getElementById('addOfferTitle').value,
+    name: document.getElementById('addOfferTitle').value.trim(),
     price: parseFloat(document.getElementById('addOfferPrice').value),
-    description: document.getElementById('addOfferDescription').value,
-    image: document.getElementById('addOfferImage').value,
+    description: document.getElementById('addOfferDescription').value.trim(),
+    image: imageValue || 'https://via.placeholder.com/300', // ← default image
   };
 
-  // إضافة newprice فقط إذا كان موجود
   const newPrice = document.getElementById('addOfferNewPrice').value;
   if (newPrice) {
     data.newprice = parseFloat(newPrice);
   }
+
+  console.log('📤 Sending data:', data); // ← شوف الداتا قبل ما تتبعت
 
   try {
     const response = await fetch(`${BASE_URL}/api/v1/offer`, {
@@ -334,6 +337,9 @@ async function addOffer(event) {
       body: JSON.stringify(data),
     });
 
+    const result = await response.json(); // ← اقرا الـ response
+    console.log('📥 Server response:', result); // ← شوف رد السيرفر
+
     if (response.ok) {
       showMessage('تم إضافة العرض بنجاح', 'success');
       closeModal('addOfferModal');
@@ -341,16 +347,13 @@ async function addOffer(event) {
       document.getElementById('addOfferImagePreview').style.display = 'none';
       setTimeout(() => window.location.reload(), 1500);
     } else {
-      const error = await response.json();
-      showMessage(error.message || 'فشل إضافة العرض', 'error');
+      showMessage(result.message || 'فشل إضافة العرض', 'error');
     }
   } catch (error) {
     console.error('Error:', error);
     showMessage('حدث خطأ أثناء الإضافة', 'error');
   }
 }
-
-
 
 // عرض فاتورة الطلب
 async function showOrderInvoice(orderId) {
@@ -397,7 +400,7 @@ async function showOrderInvoice(orderId) {
             0
           )
         : order.total || 0;
-console.log('Order Status:', order.status);
+    console.log('Order Status:', order.status);
     // إنشاء محتوى الفاتورة
     const invoiceHTML = `
       <div class="invoice-header">
@@ -486,8 +489,6 @@ console.log('Order Status:', order.status);
     showMessage('فشل في تحميل بيانات الطلب', 'error');
   }
 }
-
-
 
 // حذف طلب واحد
 async function deleteOrder(orderId) {
@@ -704,5 +705,3 @@ window.onclick = function (event) {
     confirmDelete(false);
   }
 };
-
-

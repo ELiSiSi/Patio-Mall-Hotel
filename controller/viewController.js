@@ -1,16 +1,7 @@
-import mongoose from 'mongoose';
-
-import Meal from '../models/mealModel.js';
-import Offer from '../models/offerModel.js';
-import AppError from '../utils/appError.js';
-
-
 // homepage -----------------------------------------------------------------------------------
 export const homepage = async (req, res, next) => {
   try {
-    const meals = await Meal.find();
     res.status(200).render('home', {
-      meals,
       title: 'Home',
     });
   } catch (err) {
@@ -18,47 +9,79 @@ export const homepage = async (req, res, next) => {
   }
 };
 
-//  menupage -----------------------------------------------------------------------------------
-export const menupage = async (req, res, next) => {
+
+
+// hotelPage -----------------------------------------------------------------------------------
+export const hotelPage = async (req, res, next) => {
   try {
-    const meals = await Meal.find();
-    res.status(200).render('menu', {
-      meals,
-      title: 'Menu',
-    });
+    res.status(200).render('hotel', { title: 'hotel' });
   } catch (err) {
-    return next(new AppError('No document found with that ID', 404));
+    next(err);
   }
 };
 
-// offersPage -----------------------------------------------------------------------------------
- export const offersPage = async (req, res, next) => {
+// doctorsPage -----------------------------------------------------------------------------------
+export const doctorsPage = async (req, res, next) => {
   try {
-    const offers = await Offer.find();
-
-
-    res.status(200).render('offers', {
-      offersList: offers,
-      title: 'Offers',
-    });
+    res.status(200).render('doctors', { title: 'doctors' });
   } catch (err) {
-    console.error('❌ Error:', err); // 👈 وهذا
-    return next(new AppError('Failed to load offers page', 500));
+    next(err);
   }
 };
 
-
-// cartpage -----------------------------------------------------------------------------------
-export const cartpage = async (req, res, next) => {
+// restaurantPage -----------------------------------------------------------------------------------
+export const restaurantPage = async (req, res, next) => {
   try {
-     res.status(200).render('cart', {
-       title: 'Cart',
-    });
+    res.status(200).render('restaurant', { title: 'restaurant' });
   } catch (err) {
-    return next(new AppError('No document found with that ID', 404));
+    next(err);
   }
 };
 
+// cafePage -----------------------------------------------------------------------------------
+export const cafePage = async (req, res, next) => {
+  try {
+    res.status(200).render('cafe', { title: 'cafe' });
+  } catch (err) {
+    next(err);
+  }
+};
+
+// kidsPage -----------------------------------------------------------------------------------
+export const kidsPage = async (req, res, next) => {
+  try {
+    res.status(200).render('kids', { title: 'kids' });
+  } catch (err) {
+    next(err);
+  }
+};
+
+// labPage -----------------------------------------------------------------------------------
+export const labPage = async (req, res, next) => {
+  try {
+    res.status(200).render('lab', { title: 'lab' });
+  } catch (err) {
+    next(err);
+  }
+};
+
+// lessonsPage -----------------------------------------------------------------------------------
+export const lessonsPage = async (req, res, next) => {
+  try {
+    res.status(200).render('lessons', { title: 'Lessons' });
+  } catch (err) {
+    next(err);
+  }
+};
+
+// bookingPage -----------------------------------------------------------------------------------
+export const bookingPage = async (req, res, next) => {
+  try {
+    res.status(200).render('booking', { title: 'booking' });
+  } catch (err) {
+    next(err);
+  }
+};
 
 
 

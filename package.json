@@ -3,12 +3,11 @@
   "version": "1.0.0",
   "type": "module",
   "main": "app.js",
-"scripts": {
-  "start": "node app.js",
-  "dev": "cross-env NODE_ENV=development nodemon app.js",
-  "pro": "cross-env NODE_ENV=production node app.js"
-},
-
+  "scripts": {
+    "start": "cross-env NODE_ENV=development nodemon app.j",
+    "dev": "cross-env NODE_ENV=development nodemon app.js",
+    "pro": "cross-env NODE_ENV=production node app.js"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",

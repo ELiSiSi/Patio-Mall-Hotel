@@ -13,9 +13,6 @@ import xss from 'xss-clean';
 dotenv.config();
 
 import adminRouter from './routes/adminRouter.js';
-import mealRouter from './routes/mealRouter.js';
-import offerRouter from './routes/offerRouter.js';
-import orderRouter from './routes/orderRouter.js';
 import viewRouter from './routes/viewRouter.js';
 import AppError from './utils/appError.js';
 
@@ -78,9 +75,9 @@ app.use(compression());
 //--------------------------------------------------------------------------------------------
 app.get('/.well-known/*', (req, res) => res.status(204).end());
 
-app.use('/api/v1/meal', mealRouter);
-app.use('/api/v1/offer', offerRouter);
-app.use('/api/v1/order', orderRouter);
+
+
+// View Routes
 app.use('/', viewRouter);
 app.use('/admin', adminRouter);
 

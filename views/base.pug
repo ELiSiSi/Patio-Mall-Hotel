@@ -3,54 +3,135 @@ html(lang="ar" dir="rtl")
   head
     meta(charset="UTF-8")
     meta(name="viewport" content="width=device-width, initial-scale=1.0")
-    title  شوية- #{title}
+    title فندق كوخ الباتيو - الباتيو مول أتميدة
+
+    // Google Fonts
+    link(rel="preconnect" href="https://fonts.googleapis.com")
+    link(rel="preconnect" href="https://fonts.gstatic.com" crossorigin)
+    link(
+      href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap"
+      rel="stylesheet"
+    )
+    link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css")
+
+    // CSS
     link(rel="stylesheet" href="/css/style.css")
-    link(rel="icon" type="image/png" href="/img/logo.png")
 
   body
-    // Header
-    header.header
-      .container
-        .nav-wrapper
-          .logo
-            img(src="/img/logo.png" alt=""  )
-            .logo-text
-              p أسرع واطلب نقعة جديدة
-          nav.nav
-           a(href="/" class=(title === 'Home' ? 'active' : '')) الرئيسية
-           a(href="/menu" class=(title === 'Menu' ? 'active' : '')) المنيو
-           a(href="/offers" class=(title === 'Offers' ? 'active' : '')) العروض
-           a.cart-link(href="/cart" class=(title === 'Cart' ? 'active' : ''))
-              svg(width="24" height="24" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2")
-                circle(cx="9" cy="21" r="1")
-                circle(cx="20" cy="21" r="1")
-                path(d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6")
-              span.cart-count 0
-          //- button.mobile-menu-btn
-          //-   span
-          //-   span
-          //-   span
+    div(class="min-h-screen flex flex-col")
 
-    block content
-    // Footer
-    footer.footer
-      .container
-        .footer-content
-          .footer-logo
-            img(src="/img/logo.png" alt="Ya Kebda")
-            p أسرع واطلب نقعة جديدة
-          .footer-links
-            h4 روابط سريعة
-            a(href="/") الرئيسية
-            a(href="/menu") المنيو
-            a(href="/offers") العروض
-            a(href="/cart") السلة
-          .footer-contact
-            h4 تواصل معنا
-            p 📞 +20 123 456 7890
-            p 📧 info@yakebda.com
-            p 📍 القاهرة، مصر
-        .footer-bottom
-          p © 2024 يا كبدة - Ya Kebda. جميع الحقوق محفوظة.
+      // ===== NAVIGATION =====
+      nav(class="bg-white shadow-lg sticky top-0 z-50")
+        div(class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8")
+          div(class="flex justify-between items-center flex-wrap")
 
-    script(src="/js/script.js")
+            // Logo
+            a(href="/" class="flex items-center space-x-2 space-x-reverse py-4")
+              div(class="text-2xl font-bold text-blue-600") فندق الباتيو مول
+
+            // Desktop Links
+            div(class="hidden lg:flex items-center gap-1")
+              a(href="/" class="nav-link px-4 py-2 rounded-lg text-gray-700 hover:bg-blue-50"  style='font-size: 16px; font-weight: 600;') الرئيسية
+              a(href="/doctors" class="nav-link px-4 py-2 rounded-lg text-gray-700 hover:bg-blue-50"  style='font-size: 14px;font-weight: 600;') الأطباء والعيادات
+              a(href="/restaurant" class="nav-link px-4 py-2 rounded-lg text-gray-700 hover:bg-blue-50" style='font-size: 14px;font-weight: 600;') المطعم
+              a(href="/cafe" class="nav-link px-4 py-2 rounded-lg text-gray-700 hover:bg-blue-50" style='font-size: 14px;font-weight: 600;') المقهى
+              a(href="/kids" class="nav-link px-4 py-2 rounded-lg text-gray-700 hover:bg-blue-50" style='font-size: 14px;font-weight: 600;') منطقة الألعاب
+              a(href="/lab" class="nav-link px-4 py-2 rounded-lg text-gray-700 hover:bg-blue-50" style='font-size: 14px;font-weight: 600;') معمل التحاليل
+              a(href="/lessons" class="nav-link px-4 py-2 rounded-lg text-gray-700 hover:bg-blue-50" style='font-size: 14px;font-weight: 600;') سنتر الدروس
+              a(href="/booking" class="nav-link px-4 py-2 rounded-lg text-gray-700 hover:bg-blue-50" style='font-size: 14px;font-weight: 600;') احجز الآن
+
+              // Phone
+              div(class="hidden lg:flex items-center gap-2")
+                a(href="tel:01102443884" class="font-semibold" style="color:#007bff;") 01102443884
+                  i(class="fa-solid fa-phone")
+
+
+            // Mobile Toggle
+            button(
+              id="menuToggle"
+              type="button"
+              class="lg:hidden p-2 rounded-lg text-2xl"
+            ) ☰
+
+            // ===== MOBILE MENU =====
+            div(
+              id="mobileMenu"
+              class="w-full hidden lg:hidden flex-col gap-2 pb-4"
+            )
+              a(href="/" class="nav-link block px-4 py-2 text-gray-700") الرئيسية
+              a(href="/hotel" class="nav-link block px-4 py-2 text-gray-700") الفندق
+              a(href="/doctors" class="nav-link block px-4 py-2 text-gray-700") الأطباء والعيادات
+              a(href="/restaurant" class="nav-link block px-4 py-2 text-gray-700") المطعم
+              a(href="/coffee-shop" class="nav-link block px-4 py-2 text-gray-700") المقهى
+              a(href="/kids-time" class="nav-link block px-4 py-2 text-gray-700") منطقة الألعاب
+              a(href="/lab" class="nav-link block px-4 py-2 text-gray-700") معمل التحاليل
+              a(href="/tutoring" class="nav-link block px-4 py-2 text-gray-700") سنتر الدروس
+              a(href="/booking" class="nav-link block px-4 py-2 text-gray-700") احجز الآن
+
+      // ===== PAGE CONTENT =====
+      main(class="flex-1")
+        block content
+
+      // ===== FOOTER =====
+      footer(class="bg-gray-900 text-white")
+        div(class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12")
+          div(class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8")
+
+            div
+              h3(class="text-blue-400") فندق كوخ الباتيو
+              p(class="text-gray-400 mb-4")
+                | وجهتك للاحتفالات والرعاية الصحية والطعام والمزيد في قرية أتميدة، ميت غمر
+              span(class="text-gray-400") الباتيو مول - أتميدة - ميت غمر
+
+            div
+              h3 روابط سريعة
+              ul(class="space-y-2")
+                li: a(href="/" class="text-gray-400") الرئيسية
+                li: a(href="/hotel" class="text-gray-400") الفندق
+                li: a(href="/doctors" class="text-gray-400") العيادات الطبية
+                li: a(href="/lab" class="text-gray-400") معمل التحاليل
+                li: a(href="/booking" class="text-gray-400") احجز الآن
+
+            div
+              h3 الخدمات
+              ul(class="space-y-2")
+                li: a(href="/restaurant" class="text-gray-400") مطعم البيتزا
+                li: a(href="/coffee-shop" class="text-gray-400") المقهى
+                li: a(href="/tutoring" class="text-gray-400") سنتر الدروس
+                li: a(href="/kids-time" class="text-gray-400") منطقة الألعاب
+
+            div
+              h3 تواصل معنا
+              ul(class="space-y-3")
+                li: a(href="tel:01102443884" class="text-gray-400") 01102443884
+                li: a(href="tel:01061741057" class="text-gray-400") 01061741057
+                li: span(class="text-gray-400") مفتوح يومياً
+
+          div(
+            class="border-t mt-8 pt-8 text-center"
+            style="color: oklch(0.707 0.022 261.325);"
+          )
+            p © 2026 فندق كوخ الباتيو. جميع الحقوق محفوظة.
+
+    // ===== SCRIPT =====
+    script.
+      // Mobile menu toggle
+      const menuToggle = document.getElementById('menuToggle');
+      const mobileMenu = document.getElementById('mobileMenu');
+
+      if (menuToggle && mobileMenu) {
+        menuToggle.addEventListener('click', () => {
+          mobileMenu.classList.toggle('hidden');
+        });
+      }
+
+      // Active nav link highlight
+      const currentPath = window.location.pathname;
+
+      document.querySelectorAll('a.nav-link').forEach(link => {
+        const linkPath = new URL(link.href).pathname;
+        if (linkPath === currentPath) {
+          link.classList.add('bg-blue-600', 'text-white');
+          link.classList.remove('text-gray-700');
+        }
+      });

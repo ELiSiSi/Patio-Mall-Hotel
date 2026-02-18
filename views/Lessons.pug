@@ -1,0 +1,260 @@
+extends base
+
+block content
+  main.main-content
+
+    //- ===== HERO =====
+    section.hero-banner.hero-tutoring
+      .hero-content
+        .hero-text
+          h1
+            i(class="fa-solid fa-graduation-cap" style="margin-left:10px; color:#ffd166;")
+            | سنتر الدروس — الباتيو مول
+          p
+            i(class="fa-solid fa-book-open" style="color:#fff; margin-left:6px;")
+            | تعليم عالي الجودة ومرافق مريحة للطلاب 📚✨
+
+          .badge-row
+            span.badge
+              i(class="fa-solid fa-user-graduate")
+              |  مدرسون أكفاء
+            span.badge
+              i(class="fa-solid fa-users")
+              |  مجموعات صغيرة
+            span.badge
+              i(class="fa-solid fa-book")
+              |  مواد شاملة
+            span.badge
+              i(class="fa-solid fa-star")
+              |  متابعة مستمرة
+
+        .tutoring-hero-icons
+          span.book-float(style="animation-delay:0s;")    📚
+          span.book-float(style="animation-delay:0.3s;")  ✏️
+          span.book-float(style="animation-delay:0.6s;")  📖
+          span.book-float(style="animation-delay:0.9s;")  🎓
+          span.book-float(style="animation-delay:1.2s;")  📝
+
+    //- ===== SIDEBAR + MAIN =====
+    .content-wrapper
+      aside.sidebar
+
+        .menu-card.tutoring-menu-card
+          h3.card-title
+            i(class="fa-solid fa-book-open" style="margin-left:8px;")
+            | المواد الدراسية
+          ul
+            li
+              i(class="fa-solid fa-calculator" style="color:#3b82f6; margin-left:6px;")
+              span الرياضيات
+              span.grade جميع المراحل
+            li
+              i(class="fa-solid fa-flask" style="color:#10b981; margin-left:6px;")
+              span العلوم
+              span.grade ابتدائي + إعدادي
+            li
+              i(class="fa-solid fa-language" style="color:#f59e0b; margin-left:6px;")
+              span اللغة الإنجليزية
+              span.grade جميع المراحل
+            li
+              i(class="fa-solid fa-book-quran" style="color:#c0392b; margin-left:6px;")
+              span اللغة العربية
+              span.grade جميع المراحل
+            li
+              i(class="fa-solid fa-atom" style="color:#9333ea; margin-left:6px;")
+              span الفيزياء
+              span.grade ثانوي
+            li
+              i(class="fa-solid fa-vial" style="color:#06b6d4; margin-left:6px;")
+              span الكيمياء
+              span.grade ثانوي
+
+        //- Levels
+        .menu-card.levels-card
+          h3.card-title
+            i(class="fa-solid fa-layer-group" style="margin-left:8px;")
+            | المراحل الدراسية
+          .level-list
+            .level-row
+              span.level-badge.level-primary ابتدائي
+              span.level-desc صفوف 1-6
+            .level-row
+              span.level-badge.level-middle إعدادي
+              span.level-desc صفوف 1-3
+            .level-row
+              span.level-badge.level-high ثانوي
+              span.level-desc صفوف 1-3
+
+        //- Hours
+        .menu-card.hours-card
+          h3.card-title
+            i(class="fa-solid fa-clock" style="margin-left:8px;")
+            | مواعيد العمل
+          .hours-list
+            .hour-row
+              span السبت – الخميس
+              span.hour-val 2 م – 10 م
+            .hour-row
+              span الجمعة
+              span.hour-val 5 م – 10 م
+            .open-badge
+              i(class="fa-solid fa-circle" style="color:#22c55e; font-size:0.55rem;")
+              | &nbsp;مفتوح الآن
+
+        //- Contact
+        .menu-card.contact-card
+          h3.card-title
+            i(class="fa-solid fa-phone" style="margin-left:8px;")
+            | تواصل معنا
+          .contact-info
+            p.location
+              i(class="fa-solid fa-map-location-dot" style="margin-left:6px; color:#c0392b;")
+              | الباتيو مول، أتميدة، ميت غمر
+            p.phone
+              i(class="fa-solid fa-phone-volume" style="margin-left:6px; color:#27ae60;")
+              | 01102443884
+
+        button.order-button.tutoring-order-btn
+          i(class="fa-solid fa-phone-volume" style="margin-left:8px;")
+          | اتصل الآن
+
+      //- ===== MAIN BODY =====
+      section.main-section
+
+        //- About
+        .content-card.main-intro.tutoring-intro
+          h2
+            i(class="fa-solid fa-award" style="color:#4f46e5; margin-left:8px;")
+            | تعليم احترافي — نتائج مضمونة
+          p.intro-text
+            | نقدم خدمات تعليمية احترافية لمساعدة الطلاب على التفوق في دراستهم مع مدرسين أكفاء وبيئة تعليمية مناسبة تحفز على الإبداع والتميز 🎓
+          .features
+            .feature-item.tutoring-feature
+              h3
+                i(class="fa-solid fa-user-tie" style="color:#4f46e5; margin-left:6px;")
+                | مدرسون أكفاء
+              p معلمون ذوو خبرة في مختلف المواد الدراسية
+            .feature-item.tutoring-feature
+              h3
+                i(class="fa-solid fa-users" style="color:#10b981; margin-left:6px;")
+                | مجموعات صغيرة
+              p اهتمام فردي وتعليم شخصي لكل طالب
+            .feature-item.tutoring-feature
+              h3
+                i(class="fa-solid fa-book-open" style="color:#f59e0b; margin-left:6px;")
+                | مواد شاملة
+              p الرياضيات، العلوم، اللغات، والمزيد
+            .feature-item.tutoring-feature
+              h3
+                i(class="fa-solid fa-chart-line" style="color:#c0392b; margin-left:6px;")
+                | متابعة مستمرة
+              p تقارير دورية عن تقدم الطالب
+
+        //- Subjects Gallery
+        .content-card
+          h2
+            i(class="fa-solid fa-book" style="color:#4f46e5; margin-left:8px;")
+            | المواد الدراسية المتاحة
+          .restaurant-gallery.tutoring-gallery
+            .gallery-img(style="background:linear-gradient(135deg,#3b82f6,#1d4ed8);")
+              span.gallery-emoji 🔢
+              span.gallery-label رياضيات
+            .gallery-img(style="background:linear-gradient(135deg,#10b981,#059669);")
+              span.gallery-emoji 🧪
+              span.gallery-label علوم
+            .gallery-img(style="background:linear-gradient(135deg,#f59e0b,#d97706);")
+              span.gallery-emoji 🌍
+              span.gallery-label إنجليزي
+            .gallery-img(style="background:linear-gradient(135deg,#c0392b,#991b1b);")
+              span.gallery-emoji 📖
+              span.gallery-label عربي
+            .gallery-img(style="background:linear-gradient(135deg,#9333ea,#6b21a8);")
+              span.gallery-emoji ⚛️
+              span.gallery-label فيزياء
+            .gallery-img(style="background:linear-gradient(135deg,#06b6d4,#0891b2);")
+              span.gallery-emoji 🧬
+              span.gallery-label كيمياء
+
+        //- Why Us
+        .content-card
+          h2
+            i(class="fa-solid fa-star" style="color:#f1c40f; margin-left:8px;")
+            | ليه سنتر الباتيو؟
+          .why-grid
+            .why-item.tutoring-why
+              .why-icon 👨‍🏫
+              h4 مدرسون متخصصون
+              p فريق تعليمي محترف ذو خبرة واسعة في التدريس
+            .why-item.tutoring-why
+              .why-icon 📊
+              h4 متابعة دورية
+              p تقارير أسبوعية لأولياء الأمور عن تقدم أبنائهم
+            .why-item.tutoring-why
+              .why-icon 🏆
+              h4 نتائج مضمونة
+              p نظام تعليمي مثبت الفعالية ونتائج ملموسة
+            .why-item.tutoring-why
+              .why-icon 🛋️
+              h4 بيئة مريحة
+              p قاعات مكيفة ومجهزة بأحدث وسائل التعليم
+
+        //- Cafeteria Section
+        .content-card.cafe-card
+          h2
+            i(class="fa-solid fa-mug-hot" style="color:#8b5cf6; margin-left:8px;")
+            | كافتيريا الطلاب ☕
+          .cafe-block
+            .cafe-placeholder
+              i(class="fa-solid fa-mug-hot" style="font-size:3rem; color:#8b5cf6;")
+              p مساحة مريحة للطلاب
+              p.cafe-desc للاسترخاء والأكل بين الحصص
+            .cafe-features
+              .cafe-feat
+                i(class="fa-solid fa-apple-whole" style="color:#22c55e; margin-left:6px;")
+                span خيارات صحية ومغذية
+              .cafe-feat
+                i(class="fa-solid fa-couch" style="color:#3b82f6; margin-left:6px;")
+                span جلوس مريح وواسع
+              .cafe-feat
+                i(class="fa-solid fa-tag" style="color:#f59e0b; margin-left:6px;")
+                span أسعار في متناول الطلاب
+              .cafe-feat
+                i(class="fa-solid fa-utensils" style="color:#c0392b; margin-left:6px;")
+                span وجبات طازجة يومياً
+
+        //- Location
+        .content-card
+          h2
+            i(class="fa-solid fa-map-pin" style="margin-left:8px; color:#4f46e5;")
+            | موقعنا
+          .location-block
+            .location-map-placeholder.tutoring-map
+              i(class="fa-solid fa-graduation-cap" style="font-size:2.5rem; color:#4f46e5;")
+              p سنتر الدروس
+              p الباتيو مول، أتميدة
+            .location-details
+              .loc-row
+                i(class="fa-solid fa-building" style="color:#3b82f6; margin-left:8px;")
+                span الباتيو مول، شارع المعهد الديني
+              .loc-row
+                i(class="fa-solid fa-location-dot" style="color:#c0392b; margin-left:8px;")
+                span أتميدة، ميت غمر، الدقهلية
+              .loc-row
+                i(class="fa-solid fa-phone" style="color:#27ae60; margin-left:8px;")
+                span 01102443884
+              a.call-now-btn.tutoring-call-btn(href="tel:01102443884")
+                i(class="fa-solid fa-phone-volume" style="margin-left:8px;")
+                | اتصل الآن
+
+    //- ===== CTA =====
+    section.cta-section.cta-tutoring
+      .cta-inner
+        h2 ساعد ابنك يتفوق! 🎓
+        p سجّل دلوقتي في سنتر الباتيو واضمن مستقبل تعليمي مشرق لابنك!
+        .cta-btns
+          a.cta-btn-primary.tutoring-cta-btn(href="tel:01102443884")
+            i(class="fa-solid fa-phone-volume" style="margin-left:8px;")
+            | 01102443884
+          a.cta-btn-secondary(href="/")
+            i(class="fa-solid fa-house" style="margin-left:8px;")
+            | الصفحة الرئيسية

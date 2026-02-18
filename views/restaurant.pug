@@ -1,0 +1,299 @@
+extends base
+
+block content
+  main.main-content
+
+    //- ===== HERO =====
+    section.hero-banner
+      .hero-content
+        .hero-text
+          h1
+            i(class="fa-solid fa-pizza-slice" style="margin-left:10px; color:#ffd166;")
+            | بيتزا آند باستا — الباتيو مول
+          p
+            i(class="fa-solid fa-location-dot" style="color:#fff; margin-left:6px;")
+            | الدور الرابع، الباتيو مول، أتميدة، ميت غمر 🍕
+
+          .badge-row
+            span.badge
+              i(class="fa-solid fa-fire")
+              |  الأفضل في المنطقة
+            span.badge
+              i(class="fa-solid fa-bolt")
+              |  توصيل سريع
+            span.badge
+              i(class="fa-solid fa-award")
+              |  جودة عالمية
+
+        svg.pizza-graphic(viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg")
+          ellipse(cx="100" cy="185" rx="70" ry="10" fill="rgba(0,0,0,.18)")
+          circle(cx="100" cy="100" r="88" fill="#e8a045")
+          circle(cx="100" cy="100" r="88" fill="none" stroke="#c47c1e" stroke-width="14")
+          circle(cx="100" cy="100" r="74" fill="#f5c97a")
+          circle(cx="100" cy="100" r="66" fill="#c0392b")
+          circle(cx="100" cy="100" r="60" fill="#f9d84e")
+
+    //- //- ===== STATS BAR =====
+    //- section.stats-bar
+    //-   .stats-inner
+    //-     .stat-item
+    //-       span.stat-num 500+
+    //-       span.stat-label طلب يومياً
+    //-     .stat-divider
+    //-     .stat-item
+    //-       span.stat-num 4.9
+    //-       span.stat-label ⭐ تقييم العملاء
+    //-     .stat-divider
+    //-     .stat-item
+    //-       span.stat-num 15+
+    //-       span.stat-label صنف متنوع
+    //-     .stat-divider
+    //-     .stat-item
+    //-       span.stat-num 3
+    //-       span.stat-label سنوات خبرة
+
+    //- ===== SIDEBAR + MAIN =====
+    .content-wrapper
+      aside.sidebar
+
+        .menu-card
+          h3.card-title
+            i(class="fa-solid fa-utensils" style="margin-left:8px;")
+            | قائمة الطعام
+          .menu-section
+            h4
+              i(class="fa-solid fa-cheese" style="margin-left:6px;")
+              | بيتزا تقليدية
+            ul
+              li
+                i(class="fa-solid fa-pizza-slice" style="color:#e67e22; margin-left:6px;")
+                | مارغريتا
+              li
+                i(class="fa-solid fa-pizza-slice" style="color:#e67e22; margin-left:6px;")
+                | بيتزا كلاسيك
+              li
+                i(class="fa-solid fa-pizza-slice" style="color:#e67e22; margin-left:6px;")
+                | مارجريتا ديلوكس
+              li
+                i(class="fa-solid fa-pizza-slice" style="color:#e67e22; margin-left:6px;")
+                | فيجي سبيشل
+
+          .menu-section
+            h4
+              i(class="fa-solid fa-crown" style="color:gold; margin-left:6px;")
+              | بيتزا مميزة
+            ul
+              li
+                i(class="fa-solid fa-crown" style="color:gold; margin-left:6px;")
+                | بيلا إيطاليا
+              li
+                i(class="fa-solid fa-crown" style="color:gold; margin-left:6px;")
+                | سوبر سوبريم
+              li
+                i(class="fa-solid fa-crown" style="color:gold; margin-left:6px;")
+                | نقانق إيطالي
+              li
+                i(class="fa-solid fa-crown" style="color:gold; margin-left:6px;")
+                | مون لايت
+
+          .menu-section
+            h4
+              i(class="fa-solid fa-bowl-food" style="margin-left:6px;")
+              | باستا
+            ul
+              li
+                i(class="fa-solid fa-bowl-food" style="color:#c0392b; margin-left:6px;")
+                | باستا بولونيز
+              li
+                i(class="fa-solid fa-bowl-food" style="color:#c0392b; margin-left:6px;")
+                | كاربونارا
+              li
+                i(class="fa-solid fa-bowl-food" style="color:#c0392b; margin-left:6px;")
+                | باستا أرابياتا
+              li
+                i(class="fa-solid fa-bowl-food" style="color:#c0392b; margin-left:6px;")
+                | فيتوتشيني كريمي
+
+        .menu-card
+          h3.card-title
+            i(class="fa-solid fa-mug-hot" style="margin-left:8px;")
+            | مشروبات
+          ul
+            li
+              i(class="fa-solid fa-wine-glass" style="margin-left:6px;")
+              | عصائر طازجة
+            li
+              i(class="fa-solid fa-bottle-water" style="margin-left:6px;")
+              | مشروبات غازية
+            li
+              i(class="fa-solid fa-martini-glass" style="margin-left:6px;")
+              | موهيتو فريش
+
+        .menu-card.hours-card
+          h3.card-title
+            i(class="fa-solid fa-clock" style="margin-left:8px;")
+            | مواعيد العمل
+          .hours-list
+            .hour-row
+              span السبت – الخميس
+              span.hour-val 10 ص – 12 م
+            .hour-row
+              span الجمعة
+              span.hour-val 2 م – 12 م
+            .open-badge
+              i(class="fa-solid fa-circle" style="color:#22c55e; font-size:0.55rem;")
+              | &nbsp;مفتوح الآن
+
+        .menu-card.contact-card
+          h3.card-title
+            i(class="fa-solid fa-phone" style="margin-left:8px;")
+            | للحجز والتواصل
+          .contact-info
+            p.location
+              i(class="fa-solid fa-map-location-dot" style="margin-left:6px; color:#c0392b;")
+              | الباتيو مول، الدور الرابع، أتميدة
+            p.phone
+              i(class="fa-solid fa-phone-volume" style="margin-left:6px; color:#27ae60;")
+              | 01067174097
+            p.phone
+              i(class="fa-solid fa-phone-volume" style="margin-left:6px; color:#27ae60;")
+              | 01102441180
+
+        button.order-button
+          i(class="fa-solid fa-cart-shopping" style="margin-left:8px;")
+          | اطلب الآن
+
+      section.main-section
+
+        //- About
+        .content-card.main-intro
+          h2
+            i(class="fa-solid fa-medal" style="color:#c0392b; margin-left:8px;")
+            | الطعم الأصيل والجودة التي
+            span(style="color:#c0392b;") &nbsp;تستحقها
+          p.intro-text
+            | نقدم تجربة طعام عالمية في بيتزا آند باستا، بمكونات طازجة، ووصفات إيطالية أصيلة، وخدمة راقية تليق بعملائنا. كل طبق بيحكي قصة شغف وإتقان 🌍
+          .features
+            .feature-item
+              h3
+                i(class="fa-solid fa-leaf" style="color:#27ae60; margin-left:6px;")
+                | مكونات طازجة
+              p خضروات يومية مختارة بعناية
+            .feature-item
+              h3
+                i(class="fa-solid fa-truck-fast" style="color:#e67e22; margin-left:6px;")
+                | توصيل سريع
+              p يصل طلبك ساخناً خلال دقائق
+            .feature-item
+              h3
+                i(class="fa-solid fa-face-smile" style="color:#f1c40f; margin-left:6px;")
+                | رضا العملاء
+              p تجربة راقية بطابع عالمي
+
+        //- //- Gallery
+        //- .content-card
+        //-   h2
+        //-     i(class="fa-solid fa-images" style="color:#c0392b; margin-left:8px;")
+        //-     | معرض الأطباق
+        //-   .restaurant-gallery
+        //-     .gallery-img(style="background:linear-gradient(135deg,#7b1010,#c0392b);")
+        //-       span.gallery-emoji 🍕
+        //-       span.gallery-label بيتزا مارغريتا
+        //-     .gallery-img(style="background:linear-gradient(135deg,#8b4513,#e67e22);")
+        //-       span.gallery-emoji 🍝
+        //-       span.gallery-label باستا بولونيز
+        //-     .gallery-img(style="background:linear-gradient(135deg,#5b0000,#8b1a1a);")
+        //-       span.gallery-emoji 🧀
+        //-       span.gallery-label بيتزا أربع جبن
+        //-     .gallery-img(style="background:linear-gradient(135deg,#b7860b,#f39c12);")
+        //-       span.gallery-emoji 🫙
+        //-       span.gallery-label صلصة طازجة
+        //-     .gallery-img(style="background:linear-gradient(135deg,#c0392b,#e74c3c);")
+        //-       span.gallery-emoji 🍷
+        //-       span.gallery-label مشروبات طازجة
+        //-     .gallery-img(style="background:linear-gradient(135deg,#6b3a2a,#c0392b);")
+        //-       span.gallery-emoji 🫕
+        //-       span.gallery-label باستا كريمي
+
+        //- Why Us
+        .content-card
+          h2
+            i(class="fa-solid fa-star" style="color:#f1c40f; margin-left:8px;")
+            | ليه بيتزا آند باستا؟
+          .why-grid
+            .why-item
+              .why-icon 🔥
+              h4 فرن حجري أصيل
+              p بيتزا بتتخبز في فرن حجري بحرارة عالية لطعم لا يُقاوَم
+            .why-item
+              .why-icon 🌿
+              h4 مكونات طبيعية 100%
+              p بدون حافظات، كل يوم طازج من المزرعة لطبقك
+            .why-item
+              .why-icon 👨‍🍳
+              h4 وصفات إيطالية أصيلة
+              p وصفات أصيلة مُعدة بأيدي خبراء الطبخ الإيطالي
+            .why-item
+              .why-icon 🚀
+              h4 توصيل فائق السرعة
+              p نوصل طلبك ساخناً ولذيذاً في أقل وقت ممكن
+
+        //- Location
+        .content-card
+          h2
+            i(class="fa-solid fa-map-pin" style="margin-left:8px; color:#c0392b;")
+            | موقعنا وتواصل معنا
+          .location-block
+            .location-map-placeholder
+              i(class="fa-solid fa-map-location-dot" style="font-size:2.5rem; color:#c0392b;")
+              p الباتيو مول — الدور الرابع
+              p أتميدة، ميت غمر، الدقهلية
+            .location-details
+              .loc-row
+                i(class="fa-solid fa-building" style="color:#3b82f6; margin-left:8px;")
+                span الباتيو مول، شارع المعهد الديني
+              .loc-row
+                i(class="fa-solid fa-elevator" style="color:#9333ea; margin-left:8px;")
+                span الدور الرابع
+              .loc-row
+                i(class="fa-solid fa-phone" style="color:#27ae60; margin-left:8px;")
+                span 01067174097
+              .loc-row
+                i(class="fa-solid fa-phone" style="color:#27ae60; margin-left:8px;")
+                span 01102441180
+              a.call-now-btn(href="tel:01067174097")
+                i(class="fa-solid fa-phone-volume" style="margin-left:8px;")
+                | اتصل الآن
+
+    //- ===== REVIEWS =====
+    //- section.reviews-section
+    //-   .reviews-inner
+    //-     h2.reviews-title
+    //-       i(class="fa-solid fa-comments" style="color:#c0392b; margin-left:8px;")
+    //-       | ماذا يقول عملاؤنا
+    //-     .reviews-grid
+    //-       .review-card
+    //-         .review-stars ⭐⭐⭐⭐⭐
+    //-         p.review-text "أحسن بيتزا أكلتها في حياتي، العجينة خفيفة والمكونات طازجة جداً!"
+    //-         .review-author — محمد أ.
+    //-       .review-card
+    //-         .review-stars ⭐⭐⭐⭐⭐
+    //-         p.review-text "الباستا كانت خرافية، والتوصيل وصل ساخن في أقل من 30 دقيقة!"
+    //-         .review-author — سارة م.
+    //-       .review-card
+    //-         .review-stars ⭐⭐⭐⭐⭐
+    //-         p.review-text "أكل راقي بسعر معقول، هنرجع تاني وتالت وعاشر مرة!"
+    //-         .review-author — أحمد ع.
+
+    //- ===== CTA =====
+    section.cta-section
+      .cta-inner
+        h2 جاهز تطلب؟ 🍕
+        p خليك ما تتأخرش — اتصل دلوقتي وهنوصلك أحسن بيتزا وباستا في ميت غمر!
+        .cta-btns
+          a.cta-btn-primary(href="tel:01067174097")
+            i(class="fa-solid fa-phone-volume" style="margin-left:8px;")
+            | 01067174097
+          a.cta-btn-secondary(href="tel:01102441180")
+            i(class="fa-solid fa-phone" style="margin-left:8px;")
+            | 01102441180

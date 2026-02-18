@@ -12,7 +12,7 @@ router.get('/cafe', cafePage);
 router.get('/doctors', doctorsPage);
 router.get('/kids', kidsPage);
 router.get('/lab', labPage);
-router.get('/tutoring', lessonsPage);
+router.get('/lessons', lessonsPage);
 router.get('/booking', bookingPage);
 
 export default router;

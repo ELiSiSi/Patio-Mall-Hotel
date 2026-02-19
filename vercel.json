@@ -5,15 +5,12 @@
       "src": "app.js",
       "use": "@vercel/node",
       "config": {
-        "maxDuration": 10
+        "maxDuration": 10,
+        "includeFiles": ["views/**/*", "views/*.pug", "public/**/*"]
       }
     }
   ],
   "routes": [
-    {
-      "src": "/public/(.*)",
-      "dest": "/public/$1"
-    },
     {
       "src": "/(.*)",
       "dest": "/app.js"

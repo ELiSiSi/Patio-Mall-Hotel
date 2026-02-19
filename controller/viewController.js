@@ -79,7 +79,7 @@ export const centerPage = async (req, res, next) => {
 // lessonsPage -----------------------------------------------------------------------------------
 export const lessonsPage = async (req, res, next) => {
   try {
-    res.status(200).render('admin/lessons', { title: 'Lessons' });
+    res.status(200).render('lessons', { title: 'Lessons' });
   } catch (err) {
     next(err);
   }

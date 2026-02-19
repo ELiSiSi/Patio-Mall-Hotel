@@ -74,12 +74,12 @@ export const centerPage = async (req, res, next) => {
   } catch (err) {
     next(err);
   }
-};  
+};
 
 // lessonsPage -----------------------------------------------------------------------------------
 export const lessonsPage = async (req, res, next) => {
   try {
-    res.status(200).render('lessons', { title: 'Lessons' });
+    res.status(200).render('admin/lessons', { title: 'Lessons' });
   } catch (err) {
     next(err);
   }

@@ -5,7 +5,8 @@
       "src": "app.js",
       "use": "@vercel/node",
       "config": {
-        "maxDuration": 10
+        "maxDuration": 10,
+        "includeFiles": ["views/**", "public/**"]
       }
     }
   ],

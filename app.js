@@ -15,6 +15,8 @@ dotenv.config();
 import adminRouter from './routes/adminRouter.js';
 import viewRouter from './routes/viewRouter.js';
 import AppError from './utils/appError.js';
+import bookingRouter from './routes/bookingRouter.js';
+import roomRouter from './routes/roomRouter.js';
 
 const MONGO_URI = process.env.MONGO_URI;
 const app = express();
@@ -80,6 +82,10 @@ app.get('/.well-known/*', (req, res) => res.status(204).end());
 // View Routes
 app.use('/', viewRouter);
 app.use('/admin', adminRouter);
+
+// API Routes
+app.use('/api/v1/booking', bookingRouter);
+app.use('/api/v1/room', roomRouter);
 
 // 404 handler للـ routes اللي مش موجودة
 app.all('*', (req, res, next) => {

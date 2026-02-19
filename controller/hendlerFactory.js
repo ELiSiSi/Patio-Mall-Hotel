@@ -1,12 +1,10 @@
 import AppError from '../utils/appError.js';
-
 // Create One -----------------------------------------------------------------------------------
 export const createOne = (Model) => async (req, res, next) => {
-  console.log('📥 Request Body:', req.body);
+
 
   try {
     const doc = await Model.create(req.body);
-
 
     return res.status(201).json({
       status: 'success',
@@ -15,9 +13,16 @@ export const createOne = (Model) => async (req, res, next) => {
       },
     });
   } catch (error) {
+    // Handle duplicate key error (unique fields)
+    if (error.code === 11000) {
+      return res.status(400).json({
+        status: 'fail',
+        message: 'Duplicate value error: This value already exists',
+        error: error.keyValue, // shows the field and value that caused the error
+      });
+    }
 
-
-    // Return JSON error instead of passing to next()
+    // Other errors
     return res.status(400).json({
       status: 'fail',
       message: error.message,

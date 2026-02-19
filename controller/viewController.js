@@ -1,3 +1,7 @@
+import AppError from '../utils/appError.js';
+
+import  Room from '../models/roomModel.js';
+
 // homepage -----------------------------------------------------------------------------------
 export const homepage = async (req, res, next) => {
   try {
@@ -8,8 +12,6 @@ export const homepage = async (req, res, next) => {
     return next(new AppError('No document found with that ID', 404));
   }
 };
-
-
 
 // hotelPage -----------------------------------------------------------------------------------
 export const hotelPage = async (req, res, next) => {
@@ -77,11 +79,9 @@ export const lessonsPage = async (req, res, next) => {
 // bookingPage -----------------------------------------------------------------------------------
 export const bookingPage = async (req, res, next) => {
   try {
-    res.status(200).render('booking', { title: 'booking' });
+    const rooms = await Room.find();
+    res.status(200).render('booking', { title: 'booking' , rooms });
   } catch (err) {
     next(err);
   }
 };
-
-
-

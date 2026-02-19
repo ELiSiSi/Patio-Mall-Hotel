@@ -1,0 +1,121 @@
+doctype html
+html(lang="ar" dir="rtl")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    title كوخ الباتيو - لوحة الإدارة
+    link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css")
+    link(rel="stylesheet" href="/css/admin.css")
+    block head
+
+  body
+    //- ===== ADMIN HEADER =====
+    header.admin-header-bar
+      .admin-header-inner
+        //- Logo & Brand
+        a.admin-brand(href="/")
+          .admin-brand-icon
+            i(class="fa-solid fa-shield-halved")
+          .admin-brand-text
+            span.admin-brand-name كوخ الباتيو
+            span.admin-brand-sub لوحة الإدارة
+
+
+          a.admin-nav-link(href="/admin/booking/as43flqal213w" class=(currentPage === 'bookings' ? 'active' : ''))
+            i(class="fa-solid fa-calendar-check")
+            span الحجوزات
+          a.admin-nav-link(href="/admin/rooms/as43flqal213w" class=(currentPage === 'rooms' ? 'active' : ''))
+            i(class="fa-solid fa-bed")
+            span الغرف
+
+
+        //- Header Actions
+        .admin-header-actions
+          .admin-clock#adminClock
+            i(class="fa-regular fa-clock")
+            span#clockTime
+          a.admin-site-link(href="/" target="_blank" title="عرض الموقع")
+            i(class="fa-solid fa-arrow-up-right-from-square")
+            span الموقع
+
+
+        //- Mobile Menu Toggle
+        button.admin-menu-toggle#menuToggle(aria-label="القائمة")
+          i(class="fa-solid fa-bars")
+
+      //- Mobile Nav
+      .admin-mobile-nav#mobileNav
+        a.admin-mobile-link(href="/admin")
+          i(class="fa-solid fa-gauge-high")
+          span الرئيسية
+        a.admin-mobile-link(href="/admin/booking")
+          i(class="fa-solid fa-calendar-check")
+          span الحجوزات
+        a.admin-mobile-link(href="/admin/rooms")
+          i(class="fa-solid fa-bed")
+          span الغرف
+        a.admin-mobile-link(href="/admin/messages")
+          i(class="fa-solid fa-envelope")
+          span الرسائل
+        hr.mobile-divider
+        a.admin-mobile-link(href="/" target="_blank")
+          i(class="fa-solid fa-arrow-up-right-from-square")
+          span عرض الموقع
+        button.admin-mobile-link.logout-link(onclick="confirmLogout()")
+          i(class="fa-solid fa-right-from-bracket")
+          span تسجيل الخروج
+
+    //- ===== PAGE CONTENT =====
+    block content
+
+    //- ===== ADMIN FOOTER =====
+    footer.admin-footer
+      .admin-footer-inner
+        .admin-footer-right
+          .admin-footer-brand
+            i(class="fa-solid fa-shield-halved")
+            span كوخ الباتيو — لوحة الإدارة
+          p.admin-footer-copy جميع الحقوق محفوظة &copy; #{new Date().getFullYear()} · نظام إدارة داخلي
+
+        .admin-footer-left
+          .admin-footer-status
+            span.status-dot
+            span النظام يعمل بشكل طبيعي
+          p.admin-footer-version الإصدار 1.0.0
+
+    //- ===== SCRIPTS =====
+    script.
+      // ===== Live Clock =====
+      function updateClock() {
+        const now = new Date();
+        document.getElementById('clockTime').textContent = now.toLocaleTimeString('ar-EG', {
+          hour: '2-digit', minute: '2-digit', second: '2-digit'
+        });
+      }
+      updateClock();
+      setInterval(updateClock, 1000);
+
+      // ===== Mobile Menu =====
+      const menuToggle = document.getElementById('menuToggle');
+      const mobileNav  = document.getElementById('mobileNav');
+      menuToggle.addEventListener('click', () => {
+        mobileNav.classList.toggle('open');
+        const icon = menuToggle.querySelector('i');
+        icon.className = mobileNav.classList.contains('open') ? 'fa-solid fa-xmark' : 'fa-solid fa-bars';
+      });
+      // Close on outside click
+      document.addEventListener('click', (e) => {
+        if (!menuToggle.contains(e.target) && !mobileNav.contains(e.target)) {
+          mobileNav.classList.remove('open');
+          menuToggle.querySelector('i').className = 'fa-solid fa-bars';
+        }
+      });
+
+      // ===== Logout Confirm =====
+      function confirmLogout() {
+        if (confirm('هل تريد تسجيل الخروج من لوحة الإدارة؟')) {
+          window.location.href = '/admin/logout';
+        }
+      }
+
+    block scripts

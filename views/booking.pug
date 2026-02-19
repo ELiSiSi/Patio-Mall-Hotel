@@ -33,42 +33,44 @@ block content
             i(class="fa-solid fa-file-pen" style="margin-left:8px; color:#f43f5e;")
             | تفاصيل الحجز
 
-          form#bookingForm.booking-form(method="POST")
+          form#bookingForm.booking-form
 
-            //- ===== STEP 1: اختيار نوع الحجز =====
-            .form-section.active#step1
-              .form-group
-                label(for="bookingType")
+            //- ===== SECTION 1: نوع الحجز =====
+            .form-section-block
+              .section-header
+                span.section-num 1
+                h3.section-label
                   i(class="fa-solid fa-list-check" style="margin-left:5px; color:#db2777;")
-                  | اختر نوع الحجز و اضغط عليها  *
+                  | اختر نوع الحجز *
 
-                .booking-type-grid
-                  .type-card(data-type="room")
-                    .type-icon
-                      i(class="fa-solid fa-bed")
-                    h3 غرفة فندقية
-                    p إقامة مريحة مع جميع المرافق
+              .booking-type-grid
+                .type-card(data-type="room")
+                  .type-icon
+                    i(class="fa-solid fa-bed")
+                  h3 غرفة فندقية
+                  p إقامة مريحة مع جميع المرافق
 
-                  .type-card(data-type="event")
-                    .type-icon
-                      i(class="fa-solid fa-champagne-glasses")
-                    h3 مناسبة خاصة
-                    p أفراح، خطوبة، أعياد ميلاد
+                .type-card(data-type="event")
+                  .type-icon
+                    i(class="fa-solid fa-champagne-glasses")
+                  h3 مناسبة خاصة
+                  p أفراح، خطوبة، أعياد ميلاد
 
-                  .type-card(data-type="cottage")
-                    .type-icon
-                      i(class="fa-solid fa-house-chimney-window")
-                    h3 كوخ خاص
-                    p تجربة رومانسية مميزة
+                .type-card(data-type="cottage")
+                  .type-icon
+                    i(class="fa-solid fa-house-chimney-window")
+                  h3 كوخ خاص
+                  p تجربة رومانسية مميزة
 
-            //- Hidden input لحفظ نوع الحجز
-            input#selectedType(type="hidden" name="bookingType" required)
+              input#selectedType(type="hidden" name="bookingType" required)
 
-            //- ===== STEP 2: معلومات الاتصال (مشتركة) =====
-            .form-section#step2(style="display:none;")
-              h3.section-title
-                i(class="fa-solid fa-user-circle" style="margin-left:5px;")
-                | معلومات الاتصال
+            //- ===== SECTION 2: معلومات الاتصال =====
+            .form-section-block
+              .section-header
+                span.section-num 2
+                h3.section-label
+                  i(class="fa-solid fa-user-circle" style="margin-left:5px;")
+                  | معلومات الاتصال
 
               .form-row
                 .form-group
@@ -83,197 +85,170 @@ block content
                     input#phone.form-input(type="tel" name="phone" placeholder="01XXXXXXXXX" required)
                     i(class="fa-solid fa-phone input-icon")
 
-              .form-group
-                label(for="email") البريد الإلكتروني
-                .input-with-icon
-                  input#email.form-input(type="email" name="email" placeholder="your.email@example.com")
-                  i(class="fa-solid fa-envelope input-icon")
+            //- ===== SECTION 3: تفاصيل الحجز - تظهر حسب النوع =====
+            .form-section-block#bookingDetailsBlock(style="display:none;")
+              .section-header
+                span.section-num 3
+                h3.section-label#detailsTitle
+                  i(class="fa-solid fa-info-circle" style="margin-left:5px;")
+                  | تفاصيل الحجز
 
-            //- ===== DETAILS: غرفة فندقية =====
-            .form-section.booking-details#detailsRoom(style="display:none;")
-              h3.section-title
-                i(class="fa-solid fa-bed" style="margin-left:5px;")
-                | تفاصيل حجز الغرفة
-
-              .form-group
-                label(for="roomType") اختر الغرفة *
-                select#roomType.form-select(name="roomType")
-                  option(value="") -- اختر نوع الغرفة --
-                  option(value="standard") غرفة ستاندرد - 500 ج/ليلة
-                  option(value="deluxe") غرفة ديلوكس - 750 ج/ليلة
-                  option(value="suite") جناح - 1200 ج/ليلة
-                  option(value="family") غرفة عائلية - 900 ج/ليلة
-
-              .form-row
+              //- ===== DETAILS: غرفة فندقية =====
+              #detailsRoom(style="display:none;")
                 .form-group
-                  label(for="checkIn") تاريخ الوصول *
-                  .input-with-icon
-                    input#checkIn.form-input(type="date" name="checkIn")
-                    i(class="fa-solid fa-calendar-days input-icon")
+                  label(for="roomType") اختر الغرفة *
+                  select#roomType.form-select(name="roomType")
+                    option(value="") -- اختر نوع الغرفة --
+                    each room in rooms
+                      option(value=room.name) #{room.name} - #{room.price} ج/ليلة
 
-                .form-group
-                  label(for="checkOut") تاريخ المغادرة *
-                  .input-with-icon
-                    input#checkOut.form-input(type="date" name="checkOut")
-                    i(class="fa-solid fa-calendar-check input-icon")
+                .form-row
+                  .form-group
+                    label(for="checkIn") تاريخ الوصول *
+                    .input-with-icon
+                      input#checkIn.form-input(type="date" name="checkIn")
+                      i(class="fa-solid fa-calendar-days input-icon")
 
-              .form-row
-                .form-group
-                  label(for="adults") عدد البالغين
-                  .input-with-icon
-                    input#adults.form-input(type="number" name="adults" min="1" max="10" value="1")
-                    i(class="fa-solid fa-user input-icon")
+                  .form-group
+                    label(for="checkOut") تاريخ المغادرة *
+                    .input-with-icon
+                      input#checkOut.form-input(type="date" name="checkOut")
+                      i(class="fa-solid fa-calendar-check input-icon")
 
-                .form-group
-                  label(for="children") عدد الأطفال
-                  .input-with-icon
-                    input#children.form-input(type="number" name="children" min="0" max="10" value="0")
-                    i(class="fa-solid fa-child input-icon")
-
-              .form-group
-                label(for="roomNotes") ملاحظات إضافية
-                .input-with-icon
-                  textarea#roomNotes.form-textarea(name="roomNotes" rows="3" placeholder="أي طلبات خاصة؟ (سرير إضافي، إطلالة معينة...)")
-                  i(class="fa-solid fa-message input-icon textarea-icon")
-
-            //- ===== DETAILS: مناسبة خاصة =====
-            .form-section.booking-details#detailsEvent(style="display:none;")
-              h3.section-title
-                i(class="fa-solid fa-champagne-glasses" style="margin-left:5px;")
-                | تفاصيل المناسبة
-
-              .form-group
-                label(for="eventType") نوع المناسبة *
-                select#eventType.form-select(name="eventType")
-                  option(value="") -- اختر نوع المناسبة --
-                  option(value="wedding") حفل زفاف
-                  option(value="engagement") خطوبة
-                  option(value="birthday") عيد ميلاد
-                  option(value="anniversary") ذكرى سنوية
-                  option(value="corporate") حدث شركات
-                  option(value="photo") جلسة تصوير فقط
-                  option(value="other") أخرى
-
-              .form-row
-                .form-group
-                  label(for="eventDate") تاريخ المناسبة *
-                  .input-with-icon
-                    input#eventDate.form-input(type="date" name="eventDate")
-                    i(class="fa-solid fa-calendar-days input-icon")
-                .form-group
-                  label(for="eventDuration") مدة الحفل
-                  .input-with-icon
-                    select#eventDuration.form-select(name="eventDuration")
-                      option(value="1") 1 ساعة
-                      option(value="2") 2 ساعات
-                      option(value="3") 3 ساعات
-                      option(value="4") 4 ساعات
-                      option(value="5" selected) 5 ساعات
-                      option(value="6") 6 ساعات
-                      option(value="7") 7 ساعات
-                      option(value="8") 8 ساعات
-                      option(value="9") 9 ساعات
-                      option(value="full") يوم كامل
-                    i(class="fa-solid fa-hourglass-half input-icon")
-
-
-              .form-row
-                .form-group
-                  label(for="guestCount") عدد الضيوف *
-                  .input-with-icon
-                    input#guestCount.form-input(type="number" name="guestCount" min="10" max="500" placeholder="عدد تقريبي")
-                    i(class="fa-solid fa-clock input-icon")
-                .form-group
-                  label(for="guestCount") يبداء من الساعه كام ؟
-                  .input-with-icon
-                    input#guestCount.form-input(type="text" name="guestCount" min="10" max="500" placeholder=" من الساعه 4 عصرا  ")
-                    i(class="fa-solid fa-hourglass-half input-icon")
-
-
-              .form-group
-                label
-                  i(class="fa-solid fa-utensils" style="margin-left:5px;")
-                  | خدمات إضافية
-                .checkbox-group
-                  label.checkbox-label
-                    input(type="checkbox" name="catering" value="yes")
-                    span خدمة طعام وضيافة
-                  label.checkbox-label
-                    input(type="checkbox" name="decoration" value="yes")
-                    span تزيين وديكور
-                  label.checkbox-label
-                    input(type="checkbox" name="photography" value="yes")
-                    span تصوير فوتوغرافي
-
-
-              .form-group
-                label(for="eventNotes") تفاصيل إضافية
-                .input-with-icon
-                  textarea#eventNotes.form-textarea(name="eventNotes" rows="4" placeholder="أخبرنا المزيد عن رؤيتك للمناسبة...")
-                  i(class="fa-solid fa-message input-icon textarea-icon")
-
-            //- ===== DETAILS: كوخ خاص =====
-            .form-section.booking-details#detailsCottage(style="display:none;")
-              h3.section-title
-                i(class="fa-solid fa-house-chimney-window" style="margin-left:5px;")
-                | تفاصيل حجز الكوخ
-
-
-
-              .form-row
-                .form-group
-                  label(for="cottageCheckIn") تاريخ الوصول *
-                  .input-with-icon
-                    input#cottageCheckIn.form-input(type="date" name="cottageCheckIn")
-                    i(class="fa-solid fa-calendar-days input-icon")
+                .form-row
+                  .form-group
+                    label(for="adults") عدد الأشخاص
+                    .input-with-icon
+                      input#adults.form-input(type="number" name="numbers" min="1" max="10" value="1")
+                      i(class="fa-solid fa-user input-icon")
+                  .form-group
+                    label(for="roomCount") عدد الغرف
+                    .input-with-icon
+                      input#roomCount.form-input(type="number" name="rooms" min="1" max="10" value="1")
+                      i(class="fa-solid fa-door-open input-icon")
 
                 .form-group
-                  label(for="cottageDays") عدد الأيام *
+                  label(for="roomNotes") ملاحظات إضافية
                   .input-with-icon
-                    input#cottageDays.form-input(type="number" name="cottageDays" min="1" max="14" value="1")
-                    i(class="fa-solid fa-calendar-week input-icon")
+                    textarea#roomNotes.form-textarea(name="message" rows="3" placeholder="أي طلبات خاصة؟ (سرير إضافي، إطلالة معينة...)")
+                    i(class="fa-solid fa-message input-icon textarea-icon")
 
-              .form-group
-                label(for="cottageGuests") عدد الأشخاص
-                .input-with-icon
-                  input#cottageGuests.form-input(type="number" name="cottageGuests" min="1" max="6" value="2")
-                  i(class="fa-solid fa-users input-icon")
+              //- ===== DETAILS: مناسبة خاصة =====
+              #detailsEvent(style="display:none;")
+                .form-group
+                  label(for="eventType") نوع المناسبة *
+                  select#eventType.form-select(name="eventType")
+                    option(value="") -- اختر نوع المناسبة --
+                    option(value="wedding") حفل زفاف
+                    option(value="engagement") خطوبة
+                    option(value="birthday") عيد ميلاد
+                    option(value="anniversary") ذكرى سنوية
+                    option(value="corporate") حدث شركات
+                    option(value="photo") جلسة تصوير فقط
+                    option(value="other") أخرى
 
-              .form-group
-                label
-                  i(class="fa-solid fa-sparkles" style="margin-left:5px;")
-                  | إضافات رومانسية
-                .checkbox-group
-                  label.checkbox-label
-                    input(type="checkbox" name="flowers" value="yes")
-                    span باقة ورد رومانسية
-                  label.checkbox-label
-                    input(type="checkbox" name="candles" value="yes")
-                    span شموع وإضاءة خاصة
-                  label.checkbox-label
-                    input(type="checkbox" name="breakfast" value="yes")
-                    span إفطار رومانسي
-                  label.checkbox-label
-                    input(type="checkbox" name="surprise" value="yes")
-                    span مفاجأة خاصة
+                .form-row
+                  .form-group
+                    label(for="eventDate") تاريخ المناسبة *
+                    .input-with-icon
+                      input#eventDate.form-input(type="date" name="checkIn")
+                      i(class="fa-solid fa-calendar-days input-icon")
+                  .form-group
+                    label(for="eventDuration") مدة الحفل
+                    .input-with-icon
+                      select#eventDuration.form-select(name="eventDuration")
+                        option(value="1") 1 ساعة
+                        option(value="2") 2 ساعات
+                        option(value="3") 3 ساعات
+                        option(value="4") 4 ساعات
+                        option(value="5" selected) 5 ساعات
+                        option(value="6") 6 ساعات
+                        option(value="7") 7 ساعات
+                        option(value="8") 8 ساعات
+                        option(value="full") يوم كامل
+                      i(class="fa-solid fa-hourglass-half input-icon")
 
-              .form-group
-                label(for="cottageNotes") طلبات خاصة
-                .input-with-icon
-                  textarea#cottageNotes.form-textarea(name="cottageNotes" rows="3" placeholder="أي تفاصيل تود إضافتها لجعل إقامتك مميزة...")
-                  i(class="fa-solid fa-message input-icon textarea-icon")
+                .form-row
+                  .form-group
+                    label(for="guestCount") عدد الضيوف *
+                    .input-with-icon
+                      input#guestCount.form-input(type="number" name="numbers" min="10" max="500" placeholder="عدد تقريبي")
+                      i(class="fa-solid fa-users input-icon")
+                  .form-group
+                    label(for="eventTime") يبدأ من الساعة؟
+                    .input-with-icon
+                      input#eventTime.form-input(type="text" name="eventTime" placeholder="مثال: 4 عصراً")
+                      i(class="fa-solid fa-clock input-icon")
 
-            //- ===== NAVIGATION BUTTONS =====
+                .form-group
+                  label
+                    i(class="fa-solid fa-utensils" style="margin-left:5px;")
+                    | خدمات إضافية
+                  .checkbox-group
+                    label.checkbox-label
+                      input(type="checkbox" name="catering" value="yes")
+                      span خدمة طعام وضيافة
+                    label.checkbox-label
+                      input(type="checkbox" name="decoration" value="yes")
+                      span تزيين وديكور
+                    label.checkbox-label
+                      input(type="checkbox" name="photography" value="yes")
+                      span تصوير فوتوغرافي
+
+                .form-group
+                  label(for="eventNotes") تفاصيل إضافية
+                  .input-with-icon
+                    textarea#eventNotes.form-textarea(name="message" rows="4" placeholder="أخبرنا المزيد عن رؤيتك للمناسبة...")
+                    i(class="fa-solid fa-message input-icon textarea-icon")
+
+              //- ===== DETAILS: كوخ خاص =====
+              #detailsCottage(style="display:none;")
+                .form-row
+                  .form-group
+                    label(for="cottageCheckIn") تاريخ الوصول *
+                    .input-with-icon
+                      input#cottageCheckIn.form-input(type="date" name="checkIn")
+                      i(class="fa-solid fa-calendar-days input-icon")
+
+                  .form-group
+                    label(for="cottageDays") عدد الأيام *
+                    .input-with-icon
+                      input#cottageDays.form-input(type="number" name="cottageDays" min="1" max="14" value="1")
+                      i(class="fa-solid fa-calendar-week input-icon")
+
+                .form-group
+                  label(for="cottageGuests") عدد الأشخاص
+                  .input-with-icon
+                    input#cottageGuests.form-input(type="number" name="numbers" min="1" max="6" value="2")
+                    i(class="fa-solid fa-users input-icon")
+
+                .form-group
+                  label
+                    i(class="fa-solid fa-sparkles" style="margin-left:5px;")
+                    | إضافات رومانسية
+                  .checkbox-group
+                    label.checkbox-label
+                      input(type="checkbox" name="flowers" value="yes")
+                      span باقة ورد رومانسية
+                    label.checkbox-label
+                      input(type="checkbox" name="candles" value="yes")
+                      span شموع وإضاءة خاصة
+                    label.checkbox-label
+                      input(type="checkbox" name="breakfast" value="yes")
+                      span إفطار رومانسي
+                    label.checkbox-label
+                      input(type="checkbox" name="surprise" value="yes")
+                      span مفاجأة خاصة
+
+                .form-group
+                  label(for="cottageNotes") طلبات خاصة
+                  .input-with-icon
+                    textarea#cottageNotes.form-textarea(name="message" rows="3" placeholder="أي تفاصيل تود إضافتها لجعل إقامتك مميزة...")
+                    i(class="fa-solid fa-message input-icon textarea-icon")
+
+            //- ===== SUBMIT BUTTON =====
             .form-navigation
-              button.btn-back(type="button" style="display:none;")
-                i(class="fa-solid fa-arrow-right" style="margin-left:5px;")
-                span رجوع
-
-              button.btn-next(type="button")
-                span التالي
-                i(class="fa-solid fa-arrow-left" style="margin-right:5px;")
-
-              button.submit-btn(type="submit" style="display:none;")
+              button.submit-btn(type="submit")
                 span إرسال طلب الحجز
                 i(class="fa-solid fa-paper-plane" style="margin-right:8px;")
 
@@ -292,34 +267,24 @@ block content
 
   //- ===== JAVASCRIPT =====
   script.
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
       const typeCards = document.querySelectorAll('.type-card');
       const selectedTypeInput = document.getElementById('selectedType');
-      const step1 = document.getElementById('step1');
-      const step2 = document.getElementById('step2');
+      const bookingDetailsBlock = document.getElementById('bookingDetailsBlock');
       const detailsRoom = document.getElementById('detailsRoom');
       const detailsEvent = document.getElementById('detailsEvent');
       const detailsCottage = document.getElementById('detailsCottage');
-      const btnNext = document.querySelector('.btn-next');
-      const btnBack = document.querySelector('.btn-back');
+      const detailsTitle = document.getElementById('detailsTitle');
       const submitBtn = document.querySelector('.submit-btn');
 
-      let currentStep = 1;
       let selectedType = '';
 
-      // ===== Toast Notification Function =====
+      // ===== Toast =====
       function showToast(message, type = 'error') {
         const container = document.getElementById('toast-container');
         const toast = document.createElement('div');
         toast.className = `toast toast-${type}`;
-
-        const icons = {
-          error: 'fa-circle-exclamation',
-          warning: 'fa-triangle-exclamation',
-          success: 'fa-circle-check',
-          info: 'fa-circle-info'
-        };
-
+        const icons = { error: 'fa-circle-exclamation', warning: 'fa-triangle-exclamation', success: 'fa-circle-check', info: 'fa-circle-info' };
         toast.innerHTML = `
           <div class="toast-content">
             <i class="fa-solid ${icons[type]} toast-icon"></i>
@@ -327,177 +292,193 @@ block content
           </div>
           <div class="toast-progress"></div>
         `;
-
         container.appendChild(toast);
-
-        // Trigger animation
         setTimeout(() => toast.classList.add('show'), 10);
-
-        // Remove after 4 seconds
         setTimeout(() => {
           toast.classList.remove('show');
           setTimeout(() => toast.remove(), 300);
         }, 4000);
       }
 
-      // ===== Shake Animation for Fields =====
       function shakeField(element) {
         element.style.animation = 'shake 0.5s ease';
         element.style.borderColor = '#ef4444';
-        setTimeout(() => {
-          element.style.animation = '';
-          element.style.borderColor = '';
-        }, 500);
+        setTimeout(() => { element.style.animation = ''; element.style.borderColor = ''; }, 500);
       }
 
       // اختيار نوع الحجز
       typeCards.forEach(card => {
-        card.addEventListener('click', function() {
+        card.addEventListener('click', function () {
           typeCards.forEach(c => c.classList.remove('active'));
           this.classList.add('active');
           selectedType = this.dataset.type;
           selectedTypeInput.value = selectedType;
-        });
-      });
 
-      // زر التالي
-      btnNext.addEventListener('click', function() {
-        if (currentStep === 1) {
-          if (!selectedType) {
-            showToast('👈 من فضلك اختر نوع الحجز أولاً', 'warning');
-            typeCards.forEach((card, index) => {
-              setTimeout(() => {
-                card.style.animation = 'shake 0.4s ease';
-                setTimeout(() => card.style.animation = '', 400);
-              }, index * 100);
-            });
-            return;
-          }
-
-          step1.style.display = 'none';
-          step2.style.display = 'block';
-          btnBack.style.display = 'flex';
-          currentStep = 2;
-
-        } else if (currentStep === 2) {
-          const nameInput = document.getElementById('name');
-          const phoneInput = document.getElementById('phone');
-          const name = nameInput.value.trim();
-          const phone = phoneInput.value.trim();
-          let hasError = false;
-
-          if (!name) {
-            shakeField(nameInput);
-            showToast('✏️ من فضلك أدخل الاسم بالكامل', 'error');
-            hasError = true;
-          }
-
-          if (!phone) {
-            shakeField(phoneInput);
-            showToast('📱 من فضلك أدخل رقم الهاتف', 'error');
-            hasError = true;
-          } else if (!/^(01)[0-9]{9}$/.test(phone)) {
-            shakeField(phoneInput);
-            showToast('⚠️ رقم الهاتف يجب أن يبدأ بـ 01 ويتكون من 11 رقم', 'error');
-            hasError = true;
-          }
-
-          if (hasError) return;
-
-          step2.style.display = 'none';
-
-          if (selectedType === 'room') {
-            detailsRoom.style.display = 'block';
-          } else if (selectedType === 'event') {
-            detailsEvent.style.display = 'block';
-          } else if (selectedType === 'cottage') {
-            detailsCottage.style.display = 'block';
-          }
-
-          btnNext.style.display = 'none';
-          submitBtn.style.display = 'flex';
-          currentStep = 3;
-        }
-      });
-
-      // زر الرجوع
-      btnBack.addEventListener('click', function() {
-        if (currentStep === 2) {
-          step2.style.display = 'none';
-          step1.style.display = 'block';
-          btnBack.style.display = 'none';
-          currentStep = 1;
-        } else if (currentStep === 3) {
+          // إخفاء كل التفاصيل ثم إظهار المناسب
           detailsRoom.style.display = 'none';
           detailsEvent.style.display = 'none';
           detailsCottage.style.display = 'none';
-          step2.style.display = 'block';
-          btnNext.style.display = 'flex';
-          submitBtn.style.display = 'none';
-          currentStep = 2;
-        }
+          bookingDetailsBlock.style.display = 'block';
+
+          if (selectedType === 'room') {
+            detailsRoom.style.display = 'block';
+            detailsTitle.innerHTML = '<i class="fa-solid fa-bed" style="margin-left:5px;"></i> تفاصيل حجز الغرفة';
+          } else if (selectedType === 'event') {
+            detailsEvent.style.display = 'block';
+            detailsTitle.innerHTML = '<i class="fa-solid fa-champagne-glasses" style="margin-left:5px;"></i> تفاصيل المناسبة';
+          } else if (selectedType === 'cottage') {
+            detailsCottage.style.display = 'block';
+            detailsTitle.innerHTML = '<i class="fa-solid fa-house-chimney-window" style="margin-left:5px;"></i> تفاصيل حجز الكوخ';
+          }
+
+          // Smooth scroll للقسم الجديد
+          setTimeout(() => {
+            bookingDetailsBlock.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }, 100);
+        });
       });
 
-      // إرسال النموذج
-      document.getElementById('bookingForm').addEventListener('submit', function(e) {
+      // ===== إرسال النموذج =====
+      document.getElementById('bookingForm').addEventListener('submit', async function (e) {
         e.preventDefault();
 
-        // التحقق من الحقول المطلوبة حسب النوع
+        const name = document.getElementById('name').value.trim();
+        const phone = document.getElementById('phone').value.trim();
         let hasError = false;
 
+        if (!selectedType) {
+          showToast('👈 من فضلك اختر نوع الحجز أولاً', 'warning');
+          return;
+        }
+
+        if (!name) {
+          shakeField(document.getElementById('name'));
+          showToast('✏️ من فضلك أدخل الاسم بالكامل', 'error');
+          hasError = true;
+        }
+
+        if (!phone) {
+          shakeField(document.getElementById('phone'));
+          showToast('📱 من فضلك أدخل رقم الهاتف', 'error');
+          hasError = true;
+        } else if (!/^(01)[0-9]{9}$/.test(phone)) {
+          shakeField(document.getElementById('phone'));
+          showToast('⚠️ رقم الهاتف يجب أن يبدأ بـ 01 ويتكون من 11 رقم', 'error');
+          hasError = true;
+        }
+
+        // التحقق حسب نوع الحجز
         if (selectedType === 'room') {
           const roomType = document.getElementById('roomType').value;
           const checkIn = document.getElementById('checkIn').value;
           const checkOut = document.getElementById('checkOut').value;
-
-          if (!roomType) {
-            shakeField(document.getElementById('roomType'));
-            showToast('🏨 من فضلك اختر نوع الغرفة', 'warning');
-            hasError = true;
-          }
-          if (!checkIn) {
-            shakeField(document.getElementById('checkIn'));
-            showToast('📅 من فضلك اختر تاريخ الوصول', 'warning');
-            hasError = true;
-          }
-          if (!checkOut) {
-            shakeField(document.getElementById('checkOut'));
-            showToast('📅 من فضلك اختر تاريخ المغادرة', 'warning');
-            hasError = true;
-          }
+          if (!roomType) { shakeField(document.getElementById('roomType')); showToast('🏨 من فضلك اختر نوع الغرفة', 'warning'); hasError = true; }
+          if (!checkIn) { shakeField(document.getElementById('checkIn')); showToast('📅 من فضلك اختر تاريخ الوصول', 'warning'); hasError = true; }
+          if (!checkOut) { shakeField(document.getElementById('checkOut')); showToast('📅 من فضلك اختر تاريخ المغادرة', 'warning'); hasError = true; }
         } else if (selectedType === 'event') {
           const eventType = document.getElementById('eventType').value;
           const eventDate = document.getElementById('eventDate').value;
-
-          if (!eventType) {
-            shakeField(document.getElementById('eventType'));
-            showToast('🎉 من فضلك اختر نوع المناسبة', 'warning');
-            hasError = true;
-          }
-          if (!eventDate) {
-            shakeField(document.getElementById('eventDate'));
-            showToast('📅 من فضلك اختر تاريخ المناسبة', 'warning');
-            hasError = true;
-          }
+          if (!eventType) { shakeField(document.getElementById('eventType')); showToast('🎉 من فضلك اختر نوع المناسبة', 'warning'); hasError = true; }
+          if (!eventDate) { shakeField(document.getElementById('eventDate')); showToast('📅 من فضلك اختر تاريخ المناسبة', 'warning'); hasError = true; }
         } else if (selectedType === 'cottage') {
           const cottageCheckIn = document.getElementById('cottageCheckIn').value;
-
-          if (!cottageCheckIn) {
-            shakeField(document.getElementById('cottageCheckIn'));
-            showToast('🏡 من فضلك اختر تاريخ الوصول', 'warning');
-            hasError = true;
-          }
+          if (!cottageCheckIn) { shakeField(document.getElementById('cottageCheckIn')); showToast('🏡 من فضلك اختر تاريخ الوصول', 'warning'); hasError = true; }
         }
 
         if (hasError) return;
 
+        // ===== تجميع بيانات الإرسال حسب النوع =====
+        const getValue = (id) => {
+          const el = document.getElementById(id);
+          return el ? el.value.trim() : '';
+        };
+        const getChecked = (name) => document.querySelector(`input[name="${name}"]`)?.checked || false;
+
+        let checkIn = '';
+        let checkOut = '';
+        let numbers = 1;
+        let rooms = 1;
+        let message = 'لا توجد ملاحظات';
+        let extraFields = {};
+
+        if (selectedType === 'room') {
+          checkIn  = getValue('checkIn');
+          checkOut = getValue('checkOut');
+          numbers  = parseInt(getValue('adults') || 1);
+          rooms    = parseInt(getValue('roomCount') || 1);
+          message  = getValue('roomNotes') || 'لا توجد ملاحظات';
+          extraFields.roomType = getValue('roomType');
+
+        } else if (selectedType === 'event') {
+          checkIn  = getValue('eventDate');
+          checkOut = checkIn; // نفس اليوم
+          numbers  = parseInt(getValue('guestCount') || 1);
+          message  = getValue('eventNotes') || 'لا توجد ملاحظات';
+          extraFields = {
+            eventType:     getValue('eventType'),
+            eventDuration: getValue('eventDuration'),
+            eventTime:     getValue('eventTime'),
+            catering:      getChecked('catering'),
+            decoration:    getChecked('decoration'),
+            photography:   getChecked('photography'),
+          };
+
+        } else if (selectedType === 'cottage') {
+          checkIn = getValue('cottageCheckIn');
+          const days = parseInt(getValue('cottageDays') || 1);
+          const arrivalDate = new Date(checkIn);
+          arrivalDate.setDate(arrivalDate.getDate() + days);
+          checkOut = arrivalDate.toISOString().split('T')[0];
+          numbers  = parseInt(getValue('cottageGuests') || 2);
+          message  = getValue('cottageNotes') || 'لا توجد ملاحظات';
+          extraFields = {
+            flowers:   getChecked('flowers'),
+            candles:   getChecked('candles'),
+            breakfast: getChecked('breakfast'),
+            surprise:  getChecked('surprise'),
+          };
+        }
+
+        const payload = {
+          name: document.getElementById('name').value.trim(),
+          phone: document.getElementById('phone').value.trim(),
+          bookingType: selectedType,
+          checkIn,
+          checkOut,
+          numbers,
+          rooms: selectedType === 'room' ? rooms : 1,
+          message,
+          ...extraFields,
+        };
+
         submitBtn.classList.add('loading');
         showToast('⏳ جاري إرسال طلب الحجز...', 'info');
 
-        setTimeout(() => {
-          showToast('✅ تم إرسال طلب الحجز بنجاح! سنتواصل معك قريباً', 'success');
+        try {
+          const response = await fetch('/api/v1/booking', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+
+          const result = await response.json();
+
+          if (response.ok) {
+            showToast('✅ تم إرسال طلب الحجز بنجاح! سنتواصل معك قريباً', 'success');
+            document.getElementById('bookingForm').reset();
+            typeCards.forEach(c => c.classList.remove('active'));
+            bookingDetailsBlock.style.display = 'none';
+            selectedType = '';
+            selectedTypeInput.value = '';
+          } else {
+            const errorMsg = result.message || 'حدث خطأ أثناء الإرسال، حاول مرة أخرى';
+            showToast('❌ ' + errorMsg, 'error');
+          }
+        } catch (err) {
+          showToast('❌ تعذر الاتصال بالخادم، تحقق من الاتصال وحاول مجدداً', 'error');
+        } finally {
           submitBtn.classList.remove('loading');
-        }, 2000);
+        }
       });
 
       // تعيين الحد الأدنى للتاريخ (اليوم)
@@ -507,12 +488,52 @@ block content
       });
     });
 
-  //- ===== CSS Styles =====
+  //- ===== CSS =====
   style.
     @keyframes shake {
       0%, 100% { transform: translateX(0); }
       10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
       20%, 40%, 60%, 80% { transform: translateX(5px); }
+    }
+
+    .form-section-block {
+      background: #fff;
+      border: 1px solid #fce7f3;
+      border-radius: 16px;
+      padding: 28px;
+      margin-bottom: 24px;
+      transition: box-shadow 0.3s ease;
+    }
+    .form-section-block:hover {
+      box-shadow: 0 4px 20px rgba(244, 63, 94, 0.08);
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+      padding-bottom: 14px;
+      border-bottom: 2px dashed #fce7f3;
+    }
+    .section-num {
+      width: 36px;
+      height: 36px;
+      background: linear-gradient(135deg, #f43f5e, #db2777);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+    .section-label {
+      font-size: 18px;
+      font-weight: 700;
+      color: #1f2937;
+      margin: 0;
     }
 
     .type-card {
@@ -531,7 +552,7 @@ block content
       box-shadow: 0 8px 20px rgba(0,0,0,0.12);
     }
 
-    /* Toast Notifications */
+    /* Toast */
     #toast-container {
       position: fixed;
       top: 20px;
@@ -541,7 +562,6 @@ block content
       flex-direction: column;
       gap: 10px;
     }
-
     .toast {
       background: white;
       border-radius: 12px;
@@ -556,95 +576,67 @@ block content
       overflow: hidden;
       border-right: 4px solid;
     }
-
-    .toast.show {
-      transform: translateX(0);
-      opacity: 1;
-    }
-
-    .toast-error {
-      border-right-color: #ef4444;
-      background: linear-gradient(135deg, #fef2f2 0%, #ffffff 100%);
-    }
-    .toast-warning {
-      border-right-color: #f59e0b;
-      background: linear-gradient(135deg, #fffbeb 0%, #ffffff 100%);
-    }
-    .toast-success {
-      border-right-color: #10b981;
-      background: linear-gradient(135deg, #ecfdf5 0%, #ffffff 100%);
-    }
-    .toast-info {
-      border-right-color: #3b82f6;
-      background: linear-gradient(135deg, #eff6ff 0%, #ffffff 100%);
-    }
-
-    .toast-content {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .toast-icon {
-      font-size: 20px;
-      flex-shrink: 0;
-    }
+    .toast.show { transform: translateX(0); opacity: 1; }
+    .toast-error { border-right-color: #ef4444; background: linear-gradient(135deg, #fef2f2 0%, #ffffff 100%); }
+    .toast-warning { border-right-color: #f59e0b; background: linear-gradient(135deg, #fffbeb 0%, #ffffff 100%); }
+    .toast-success { border-right-color: #10b981; background: linear-gradient(135deg, #ecfdf5 0%, #ffffff 100%); }
+    .toast-info { border-right-color: #3b82f6; background: linear-gradient(135deg, #eff6ff 0%, #ffffff 100%); }
+    .toast-content { display: flex; align-items: center; gap: 12px; }
+    .toast-icon { font-size: 20px; flex-shrink: 0; }
     .toast-error .toast-icon { color: #ef4444; }
     .toast-warning .toast-icon { color: #f59e0b; }
     .toast-success .toast-icon { color: #10b981; }
     .toast-info .toast-icon { color: #3b82f6; }
-
-    .toast-message {
-      color: #374151;
-      font-size: 14px;
-      font-weight: 500;
-      line-height: 1.5;
-    }
-
+    .toast-message { color: #374151; font-size: 14px; font-weight: 500; line-height: 1.5; }
     .toast-progress {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      height: 3px;
-      background: currentColor;
-      opacity: 0.3;
+      position: absolute; bottom: 0; left: 0; height: 3px;
+      background: currentColor; opacity: 0.3;
       animation: progress 4s linear forwards;
     }
+    @keyframes progress { from { width: 100%; } to { width: 0%; } }
 
-    @keyframes progress {
-      from { width: 100%; }
-      to { width: 0%; }
-    }
-
-    /* Form Input Focus States */
+    /* Focus States */
     .form-input:focus, .form-select:focus, .form-textarea:focus {
       outline: none;
       border-color: #f43f5e;
       box-shadow: 0 0 0 3px rgba(244, 63, 94, 0.1);
     }
-
     .form-input.error, .form-select.error {
       border-color: #ef4444;
       background-color: #fef2f2;
     }
 
-    /* Loading State */
-    .submit-btn.loading {
-      opacity: 0.7;
-      pointer-events: none;
+    /* Submit Button */
+    .submit-btn {
+      width: 100%;
+      padding: 16px 32px;
+      background: linear-gradient(135deg, #f43f5e, #db2777);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 18px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 20px rgba(244, 63, 94, 0.35);
     }
+    .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(244, 63, 94, 0.45); }
+    .submit-btn.loading { opacity: 0.7; pointer-events: none; }
     .submit-btn.loading::after {
       content: '';
       display: inline-block;
-      width: 16px;
-      height: 16px;
+      width: 18px;
+      height: 18px;
       border: 2px solid #ffffff;
       border-top-color: transparent;
       border-radius: 50%;
-      margin-right: 8px;
       animation: spin 1s linear infinite;
     }
+    @keyframes spin { to { transform: rotate(360deg); } }
 
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
+    .form-navigation { margin-top: 16px; }
+    .form-note { text-align: center; color: #9ca3af; font-size: 13px; margin-top: 12px; }

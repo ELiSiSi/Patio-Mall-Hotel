@@ -1,0 +1,246 @@
+extends base
+
+block content
+  main.admin-main
+
+    //- ===== PAGE TITLE =====
+    .page-title-bar
+      .page-title-info
+        h1
+          i(class="fa-solid fa-bed" style="margin-left:10px; color:#f43f5e;")
+          | إدارة الغرف
+        p.page-subtitle إضافة وتعديل وحذف الغرف الفندقية
+
+      button.add-room-btn(onclick="openAddModal()")
+        i(class="fa-solid fa-plus")
+        span إضافة غرفة جديدة
+
+    //- ===== STATS =====
+    .stats-grid
+      .stat-card.stat-total
+        .stat-icon
+          i(class="fa-solid fa-bed")
+        .stat-info
+          span.stat-label إجمالي الغرف
+          span.stat-value= rooms.length
+
+      .stat-card.stat-confirmed
+        .stat-icon
+          i(class="fa-solid fa-tag")
+        .stat-info
+          span.stat-label أقل سعر
+          span.stat-value
+            if rooms.length > 0
+              | #{Math.min(...rooms.map(r => r.price || 0))} ج
+            else
+              | —
+
+      .stat-card.stat-pending
+        .stat-icon
+          i(class="fa-solid fa-sack-dollar")
+        .stat-info
+          span.stat-label أعلى سعر
+          span.stat-value
+            if rooms.length > 0
+              | #{Math.max(...rooms.map(r => r.price || 0))} ج
+            else
+              | —
+
+      .stat-card.stat-cancelled
+        .stat-icon
+          i(class="fa-solid fa-calculator")
+        .stat-info
+          span.stat-label متوسط السعر
+          span.stat-value
+            if rooms.length > 0
+              | #{Math.round(rooms.reduce((s,r)=>s+(r.price||0),0)/rooms.length)} ج
+            else
+              | —
+
+    //- ===== SEARCH =====
+    .table-controls
+      .search-box
+        i(class="fa-solid fa-magnifying-glass search-icon")
+        input#searchInput(type="text" placeholder="ابحث باسم الغرفة...")
+
+    //- ===== TABLE =====
+    .table-wrapper
+      if rooms.length === 0
+        .empty-state
+          i(class="fa-solid fa-bed")
+          p لا توجد غرف مضافة حتى الآن
+          button.add-room-btn(onclick="openAddModal()" style="margin:16px auto 0; display:inline-flex;")
+            i(class="fa-solid fa-plus")
+            span أضف أول غرفة
+      else
+        table.bookings-table#roomsTable
+          thead
+            tr
+              th #
+              th اسم الغرفة
+              th السعر (ج/ليلة)
+              th الإجراءات
+
+          tbody
+            each room, index in rooms
+              tr.room-row(data-name=(room.name || '').toLowerCase())
+                td.td-num= index + 1
+
+                td
+                  .client-info
+                    .client-avatar= (room.name || 'غ').charAt(0)
+                    strong= room.name
+
+                td
+                  span.room-price-badge
+                    i(class="fa-solid fa-tag" style="margin-left:5px; font-size:11px;")
+                    | #{room.price} ج
+
+                td.td-actions
+                  button.action-btn.btn-edit(
+                    title="تعديل"
+                    data-id=room._id
+                    data-name=room.name
+                    data-price=room.price
+                  )
+                    i(class="fa-solid fa-pen-to-square")
+
+                  button.action-btn.btn-delete(
+                    title="حذف"
+                    onclick=`deleteRoom('${room._id}', '${room.name}')`
+                  )
+                    i(class="fa-solid fa-trash")
+
+    //- ===== MODAL =====
+    #roomModal.modal-overlay(style="display:none;")
+      .modal-card
+        .modal-header
+          h3#modalTitle
+            i(class="fa-solid fa-bed" style="margin-left:8px;")
+            | إضافة غرفة جديدة
+          button.modal-close(onclick="closeModal()")
+            i(class="fa-solid fa-xmark")
+
+        .modal-body
+          .form-group
+            label(for="roomName") اسم الغرفة *
+            .input-with-icon
+              input#roomName.form-input(type="text" placeholder="مثال: غرفة ديلوكس")
+              i(class="fa-solid fa-bed input-icon")
+
+          .form-group
+            label(for="roomPrice") السعر بالليلة (ج) *
+            .input-with-icon
+              input#roomPrice.form-input(type="number" placeholder="500" min="0")
+              i(class="fa-solid fa-tag input-icon")
+
+          input#roomId(type="hidden")
+
+          .modal-actions
+            button.modal-action-btn.btn-modal-confirm(type="button" onclick="saveRoom()")
+              i(class="fa-solid fa-floppy-disk")
+              span حفظ
+            button.modal-action-btn.btn-modal-cancel(type="button" onclick="closeModal()")
+              i(class="fa-solid fa-xmark")
+              span إلغاء
+
+    //- ===== TOAST =====
+    #toast-container
+
+  script.
+    // Toast
+    function showToast(message, type = 'info') {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+      toast.className = `toast toast-${type}`;
+      const icons = { error:'fa-circle-exclamation', warning:'fa-triangle-exclamation', success:'fa-circle-check', info:'fa-circle-info' };
+      toast.innerHTML = `<div class="toast-content"><i class="fa-solid ${icons[type]} toast-icon"></i><span class="toast-message">${message}</span></div><div class="toast-progress"></div>`;
+      container.appendChild(toast);
+      setTimeout(() => toast.classList.add('show'), 10);
+      setTimeout(() => { toast.classList.remove('show'); setTimeout(() => toast.remove(), 300); }, 4000);
+    }
+
+    // Search
+    document.getElementById('searchInput').addEventListener('input', function() {
+      const q = this.value.toLowerCase();
+      document.querySelectorAll('.room-row').forEach(row => {
+        row.style.display = row.dataset.name.includes(q) ? '' : 'none';
+      });
+    });
+
+    // Open Add
+    function openAddModal() {
+      document.getElementById('modalTitle').innerHTML = '<i class="fa-solid fa-plus" style="margin-left:8px;"></i> إضافة غرفة جديدة';
+      document.getElementById('roomId').value    = '';
+      document.getElementById('roomName').value  = '';
+      document.getElementById('roomPrice').value = '';
+      document.getElementById('roomModal').style.display = 'flex';
+      setTimeout(() => document.getElementById('roomName').focus(), 100);
+    }
+
+    // Open Edit
+    document.querySelectorAll('.btn-edit').forEach(btn => {
+      btn.addEventListener('click', function() {
+        document.getElementById('modalTitle').innerHTML = '<i class="fa-solid fa-pen-to-square" style="margin-left:8px;"></i> تعديل الغرفة';
+        document.getElementById('roomId').value    = this.dataset.id;
+        document.getElementById('roomName').value  = this.dataset.name;
+        document.getElementById('roomPrice').value = this.dataset.price;
+        document.getElementById('roomModal').style.display = 'flex';
+        setTimeout(() => document.getElementById('roomName').focus(), 100);
+      });
+    });
+
+    function closeModal() {
+      document.getElementById('roomModal').style.display = 'none';
+    }
+    document.getElementById('roomModal').addEventListener('click', e => { if (e.target === document.getElementById('roomModal')) closeModal(); });
+
+    // Save
+    async function saveRoom() {
+      const id    = document.getElementById('roomId').value;
+      const name  = document.getElementById('roomName').value.trim();
+      const price = document.getElementById('roomPrice').value;
+
+      if (!name)  { showToast('✏️ اكتب اسم الغرفة', 'warning'); return; }
+      if (!price || Number(price) <= 0) { showToast('💰 اكتب سعر صحيح', 'warning'); return; }
+
+      const isEdit = !!id;
+      const url    = isEdit ? `/api/v1/room/${id}` : '/api/v1/room';
+      const method = isEdit ? 'PATCH' : 'POST';
+
+      try {
+        const res = await fetch(url, {
+          method,
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, price: Number(price) })
+        });
+        if (res.ok) {
+          showToast(isEdit ? '✅ تم تحديث الغرفة' : '✅ تمت إضافة الغرفة', 'success');
+          closeModal();
+          setTimeout(() => location.reload(), 1200);
+        } else {
+          const err = await res.json();
+          showToast('❌ ' + (err.message || 'حدث خطأ'), 'error');
+        }
+      } catch { showToast('❌ تعذر الاتصال بالخادم', 'error'); }
+    }
+
+    // Delete
+    async function deleteRoom(id, name) {
+      if (!confirm(`هل تريد حذف غرفة "${name}" نهائياً؟`)) return;
+      try {
+        const res = await fetch(`/api/v1/room/${id}`, { method: 'DELETE' });
+        if (res.ok) {
+          showToast('🗑️ تم حذف الغرفة', 'success');
+          setTimeout(() => location.reload(), 1200);
+        } else {
+          showToast('حدث خطأ أثناء الحذف', 'error');
+        }
+      } catch { showToast('❌ تعذر الاتصال', 'error'); }
+    }
+
+    // Keyboard shortcuts
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Enter' && document.getElementById('roomModal').style.display === 'flex') saveRoom();
+      if (e.key === 'Escape') closeModal();
+    });

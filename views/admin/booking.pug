@@ -1,0 +1,348 @@
+extends base
+
+block content
+  main.admin-main
+
+    //- ===== HEADER =====
+    .admin-header
+      .admin-header-right
+        .admin-logo
+          i(class="fa-solid fa-shield-halved")
+          span لوحة التحكم
+        h1.admin-page-title
+          i(class="fa-solid fa-calendar-lines" style="margin-left:10px;")
+          | إدارة الحجوزات
+      .admin-header-left
+        span.admin-date#currentDate
+        a.admin-back-btn(href="/")
+          i(class="fa-solid fa-arrow-right" style="margin-left:6px;")
+          | الرئيسية
+
+    //- ===== STATS CARDS =====
+    .stats-grid
+      .stat-card.stat-total
+        .stat-icon
+          i(class="fa-solid fa-calendar-check")
+        .stat-info
+          span.stat-label إجمالي الحجوزات
+          span.stat-value= bookings.length
+
+      .stat-card.stat-pending
+        .stat-icon
+          i(class="fa-solid fa-clock")
+        .stat-info
+          span.stat-label قيد الانتظار
+          span.stat-value= bookings.filter(b => b.status === 'pending').length
+
+      .stat-card.stat-confirmed
+        .stat-icon
+          i(class="fa-solid fa-circle-check")
+        .stat-info
+          span.stat-label مؤكدة
+          span.stat-value= bookings.filter(b => b.status === 'confirmed').length
+
+      .stat-card.stat-cancelled
+        .stat-icon
+          i(class="fa-solid fa-circle-xmark")
+        .stat-info
+          span.stat-label ملغية
+          span.stat-value= bookings.filter(b => b.status === 'cancelled').length
+
+    //- ===== FILTERS & SEARCH =====
+    .table-controls
+      .search-box
+        i(class="fa-solid fa-magnifying-glass search-icon")
+        input#searchInput(type="text" placeholder="ابحث بالاسم أو الهاتف...")
+
+      .filter-group
+        button.filter-btn.active(data-filter="all") الكل
+        button.filter-btn(data-filter="pending") قيد الانتظار
+        button.filter-btn(data-filter="confirmed") مؤكدة
+        button.filter-btn(data-filter="cancelled") ملغية
+
+      .type-filter-group
+        button.type-btn.active(data-type="all") جميع الأنواع
+        button.type-btn(data-type="room")
+          i(class="fa-solid fa-bed")
+          |  غرفة
+        button.type-btn(data-type="event")
+          i(class="fa-solid fa-champagne-glasses")
+          |  مناسبة
+        button.type-btn(data-type="cottage")
+          i(class="fa-solid fa-house-chimney-window")
+          |  كوخ
+
+    //- ===== TABLE =====
+    .table-wrapper
+      if bookings.length === 0
+        .empty-state
+          i(class="fa-solid fa-calendar-xmark")
+          p لا توجد حجوزات حتى الآن
+      else
+        table.bookings-table#bookingsTable
+          thead
+            tr
+              th #
+              th العميل
+              th نوع الحجز
+              th تاريخ الوصول
+              th تاريخ المغادرة
+              th الأشخاص
+              th الحالة
+              th الإجراءات
+
+          tbody
+            each booking, index in bookings
+              tr.booking-row(
+                data-status=booking.status
+                data-type=booking.bookingType
+                data-name=booking.name
+                data-phone=booking.phone
+              )
+                td.td-num= index + 1
+
+                td.td-client
+                  .client-info
+                    .client-avatar= booking.name.charAt(0)
+                    .client-details
+                      strong= booking.name
+                      span= booking.phone
+
+                td.td-type
+                  if booking.bookingType === 'room'
+                    span.type-badge.type-room
+                      i(class="fa-solid fa-bed")
+                      |  غرفة فندقية
+                  else if booking.bookingType === 'event'
+                    span.type-badge.type-event
+                      i(class="fa-solid fa-champagne-glasses")
+                      |  مناسبة
+                  else if booking.bookingType === 'cottage'
+                    span.type-badge.type-cottage
+                      i(class="fa-solid fa-house-chimney-window")
+                      |  كوخ خاص
+
+                td.td-date
+                  if booking.checkIn
+                    span= new Date(booking.checkIn).toLocaleDateString('ar-EG', {year:'numeric', month:'short', day:'numeric'})
+                  else
+                    span.text-muted —
+
+                td.td-date
+                  if booking.checkOut
+                    span= new Date(booking.checkOut).toLocaleDateString('ar-EG', {year:'numeric', month:'short', day:'numeric'})
+                  else
+                    span.text-muted —
+
+                td.td-num= booking.numbers || '—'
+
+                td.td-status
+                  span.status-badge(class=`status-${booking.status}`)
+                    if booking.status === 'pending'
+                      i(class="fa-solid fa-clock")
+                      |  قيد الانتظار
+                    else if booking.status === 'confirmed'
+                      i(class="fa-solid fa-circle-check")
+                      |  مؤكد
+                    else if booking.status === 'cancelled'
+                      i(class="fa-solid fa-circle-xmark")
+                      |  ملغي
+
+                td.td-actions
+                  button.action-btn.btn-view(
+                    title="عرض التفاصيل"
+                    data-id=booking._id
+                    data-name=booking.name
+                    data-phone=booking.phone
+                    data-type=booking.bookingType
+                    data-checkin=booking.checkIn
+                    data-checkout=booking.checkOut
+                    data-numbers=booking.numbers
+                    data-rooms=booking.rooms
+                    data-message=booking.message
+                    data-status=booking.status
+                    data-roomtype=(booking.roomType || '')
+                    data-eventtype=(booking.eventType || '')
+                    data-createdat=booking.createdAt
+                  )
+                    i(class="fa-solid fa-eye")
+
+                  button.action-btn.btn-confirm(
+                    title="تأكيد الحجز"
+                    data-id=booking._id
+                    onclick=`updateStatus('${booking._id}', 'confirmed')`
+                  )
+                    i(class="fa-solid fa-check")
+
+                  button.action-btn.btn-cancel(
+                    title="إلغاء الحجز"
+                    data-id=booking._id
+                    onclick=`updateStatus('${booking._id}', 'cancelled')`
+                  )
+                    i(class="fa-solid fa-xmark")
+
+                  button.action-btn.btn-delete(
+                    title="حذف"
+                    data-id=booking._id
+                    onclick=`deleteBooking('${booking._id}')`
+                  )
+                    i(class="fa-solid fa-trash")
+
+    //- ===== MODAL: تفاصيل الحجز =====
+    #detailsModal.modal-overlay(style="display:none;")
+      .modal-card
+        .modal-header
+          h3
+            i(class="fa-solid fa-file-lines" style="margin-left:8px;")
+            | تفاصيل الحجز
+          button.modal-close(onclick="closeModal()")
+            i(class="fa-solid fa-xmark")
+        .modal-body#modalBody
+
+    //- ===== TOAST =====
+    #toast-container
+
+  script.
+    // ===== Date =====
+    document.getElementById('currentDate').textContent = new Date().toLocaleDateString('ar-EG', {
+      weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+    });
+
+    // ===== Toast =====
+    function showToast(message, type = 'info') {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+      toast.className = `toast toast-${type}`;
+      const icons = { error: 'fa-circle-exclamation', warning: 'fa-triangle-exclamation', success: 'fa-circle-check', info: 'fa-circle-info' };
+      toast.innerHTML = `
+        <div class="toast-content">
+          <i class="fa-solid ${icons[type]} toast-icon"></i>
+          <span class="toast-message">${message}</span>
+        </div>
+        <div class="toast-progress"></div>
+      `;
+      container.appendChild(toast);
+      setTimeout(() => toast.classList.add('show'), 10);
+      setTimeout(() => { toast.classList.remove('show'); setTimeout(() => toast.remove(), 300); }, 4000);
+    }
+
+    // ===== Search & Filter =====
+    const searchInput = document.getElementById('searchInput');
+    let activeStatus = 'all';
+    let activeType = 'all';
+
+    function applyFilters() {
+      const q = searchInput.value.trim().toLowerCase();
+      document.querySelectorAll('.booking-row').forEach(row => {
+        const name   = (row.dataset.name || '').toLowerCase();
+        const phone  = (row.dataset.phone || '').toLowerCase();
+        const status = row.dataset.status;
+        const type   = row.dataset.type;
+
+        const matchSearch = !q || name.includes(q) || phone.includes(q);
+        const matchStatus = activeStatus === 'all' || status === activeStatus;
+        const matchType   = activeType === 'all' || type === activeType;
+
+        row.style.display = matchSearch && matchStatus && matchType ? '' : 'none';
+      });
+    }
+
+    searchInput.addEventListener('input', applyFilters);
+
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        activeStatus = this.dataset.filter;
+        applyFilters();
+      });
+    });
+
+    document.querySelectorAll('.type-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        document.querySelectorAll('.type-btn').forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        activeType = this.dataset.type;
+        applyFilters();
+      });
+    });
+
+    // ===== View Details Modal =====
+    document.querySelectorAll('.btn-view').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const d = this.dataset;
+        const typeLabels = { room: '🏨 غرفة فندقية', event: '🥂 مناسبة خاصة', cottage: '🏡 كوخ خاص' };
+        const statusLabels = { pending: '⏳ قيد الانتظار', confirmed: '✅ مؤكد', cancelled: '❌ ملغي' };
+        const fmt = (dateStr) => dateStr ? new Date(dateStr).toLocaleDateString('ar-EG', {year:'numeric', month:'long', day:'numeric'}) : '—';
+
+        let extraHTML = '';
+        if (d.type === 'room' && d.roomtype) {
+          extraHTML = `<div class="detail-row"><span>نوع الغرفة</span><strong>${d.roomtype}</strong></div>`;
+        } else if (d.type === 'event' && d.eventtype) {
+          const eTypes = { wedding:'حفل زفاف', engagement:'خطوبة', birthday:'عيد ميلاد', anniversary:'ذكرى سنوية', corporate:'حدث شركات', photo:'جلسة تصوير', other:'أخرى' };
+          extraHTML = `<div class="detail-row"><span>نوع المناسبة</span><strong>${eTypes[d.eventtype] || d.eventtype}</strong></div>`;
+        }
+
+        document.getElementById('modalBody').innerHTML = `
+          <div class="detail-grid">
+            <div class="detail-row"><span>الاسم</span><strong>${d.name}</strong></div>
+            <div class="detail-row"><span>الهاتف</span><strong dir="ltr">${d.phone}</strong></div>
+            <div class="detail-row"><span>نوع الحجز</span><strong>${typeLabels[d.type] || d.type}</strong></div>
+            ${extraHTML}
+            <div class="detail-row"><span>تاريخ الوصول</span><strong>${fmt(d.checkin)}</strong></div>
+            <div class="detail-row"><span>تاريخ المغادرة</span><strong>${fmt(d.checkout)}</strong></div>
+            <div class="detail-row"><span>عدد الأشخاص</span><strong>${d.numbers || '—'}</strong></div>
+            <div class="detail-row"><span>الحالة</span><strong>${statusLabels[d.status] || d.status}</strong></div>
+            <div class="detail-row detail-row-full"><span>الملاحظات</span><p class="detail-message">${d.message || 'لا توجد ملاحظات'}</p></div>
+            <div class="detail-row"><span>تاريخ الإنشاء</span><strong>${fmt(d.createdat)}</strong></div>
+          </div>
+          <div class="modal-actions">
+            <button class="modal-action-btn btn-modal-confirm" onclick="updateStatus('${d.id}', 'confirmed'); closeModal();">
+              <i class="fa-solid fa-check"></i> تأكيد الحجز
+            </button>
+            <button class="modal-action-btn btn-modal-cancel" onclick="updateStatus('${d.id}', 'cancelled'); closeModal();">
+              <i class="fa-solid fa-xmark"></i> إلغاء الحجز
+            </button>
+          </div>
+        `;
+        document.getElementById('detailsModal').style.display = 'flex';
+      });
+    });
+
+    function closeModal() {
+      document.getElementById('detailsModal').style.display = 'none';
+    }
+    document.getElementById('detailsModal').addEventListener('click', function(e) {
+      if (e.target === this) closeModal();
+    });
+
+    // ===== Update Status =====
+    async function updateStatus(id, status) {
+      try {
+        const res = await fetch(`/api/v1/booking/${id}`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ status })
+        });
+        if (res.ok) {
+          showToast(status === 'confirmed' ? '✅ تم تأكيد الحجز بنجاح' : '❌ تم إلغاء الحجز', status === 'confirmed' ? 'success' : 'warning');
+          setTimeout(() => location.reload(), 1500);
+        } else {
+          showToast('حدث خطأ، حاول مرة أخرى', 'error');
+        }
+      } catch { showToast('تعذر الاتصال بالخادم', 'error'); }
+    }
+
+    // ===== Delete =====
+    async function deleteBooking(id) {
+      if (!confirm('هل أنت متأكد من حذف هذا الحجز؟')) return;
+      try {
+        const res = await fetch(`/api/v1/booking/${id}`, { method: 'DELETE' });
+        if (res.ok) {
+          showToast('🗑️ تم حذف الحجز بنجاح', 'success');
+          setTimeout(() => location.reload(), 1500);
+        } else {
+          showToast('حدث خطأ أثناء الحذف', 'error');
+        }
+      } catch { showToast('تعذر الاتصال بالخادم', 'error'); }
+    }

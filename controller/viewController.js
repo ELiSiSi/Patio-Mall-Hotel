@@ -67,14 +67,6 @@ export const labPage = async (req, res, next) => {
   }
 };
 
-// centerPage -----------------------------------------------------------------------------------
-export const centerPage = async (req, res, next) => {
-  try {
-    res.status(200).render('center', { title: 'center' });
-  } catch (err) {
-    next(err);
-  }
-};
 
 // lessonsPage -----------------------------------------------------------------------------------
 export const lessonsPage = async (req, res, next) => {

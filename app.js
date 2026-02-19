@@ -50,11 +50,22 @@ app.use(xss());
 app.use(hpp());
 app.use(compression());
 
-// Rate Limiter
+// استبدل الـ limiter الحالي بده
+
 const limiter = rateLimit({
   max: 100,
   windowMs: 60 * 60 * 1000,
   message: 'Too many requests from this IP, please try again later.',
+  // ✅ مطلوب على Vercel لأنه بيشتغل ورا proxy
+  keyGenerator: (req) => {
+    return (
+      req.headers['x-forwarded-for']?.split(',')[0].trim() ||
+      req.headers['x-real-ip'] ||
+      req.socket.remoteAddress ||
+      'unknown'
+    );
+  },
+  validate: { xForwardedForHeader: false }, // ✅ يوقف الـ warning
 });
 app.use('/api', limiter);
 

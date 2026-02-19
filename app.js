@@ -77,9 +77,23 @@ app.use((req, res, next) => {
   next();
 });
 
-// ===== View Engine =====
+// ✅ لازم يكون كده
 app.set('view engine', 'pug');
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(__dirname, 'views')); // ← السطر ده ناقص
+app.use(
+  express.static(path.join(__dirname, 'public'), {
+    maxAge: '1d',
+    etag: true,
+    setHeaders: (res, filePath) => {
+      if (filePath.endsWith('.css')) {
+        res.setHeader('Content-Type', 'text/css');
+      }
+      if (filePath.endsWith('.js')) {
+        res.setHeader('Content-Type', 'application/javascript');
+      }
+    },
+  })
+);
 
 // ===== Routes =====
 app.get('/.well-known/*', (req, res) => res.status(204).end());

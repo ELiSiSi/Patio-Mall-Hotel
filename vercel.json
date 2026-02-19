@@ -5,23 +5,14 @@
       "src": "app.js",
       "use": "@vercel/node",
       "config": {
-        "maxDuration": 10,
-        "includeFiles": ["views/**", "public/**"]
+        "maxDuration": 10
       }
     }
   ],
   "routes": [
     {
-      "src": "/css/(.*)",
-      "dest": "/public/css/$1"
-    },
-    {
-      "src": "/js/(.*)",
-      "dest": "/public/js/$1"
-    },
-    {
-      "src": "/images/(.*)",
-      "dest": "/public/images/$1"
+      "src": "/public/(.*)",
+      "dest": "/public/$1"
     },
     {
       "src": "/(.*)",

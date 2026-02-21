@@ -221,6 +221,7 @@ nav a.text-gray-700:hover { background-color: #eff6ff; }
 .experience-list { list-style: none; padding: 0; }
 .experience-list li { display: flex; align-items: flex-start; gap: 0.75rem; margin-bottom: 1rem; }
 .experience-list li svg { width: 1.5rem; height: 1.5rem; color: #d4a017; flex-shrink: 0; }
+.experience-list li span{color: #000;}
 .booking-note { margin-top: 2rem; padding: 1.5rem; background-color: #fefce8; border-radius: calc(var(--radius) + 4px); border: 2px solid var(--gold); }
 
 /* ============================================================
@@ -488,10 +489,17 @@ footer .border-t { border-top: 1px solid #2d3555; }
   .lg\:h-auto,      .lg__h-auto      { height: auto; }
   .lg\:w-auto,      .lg__w-auto      { width: auto; }
   .lg\:grid-cols-2, .lg__grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
   .lg\:grid-cols-3, .lg__grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .lg\:grid-cols-4, .lg__grid-cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 }
-
+.lg__grid-cols-2 div img  {height:40rem;}
+.lg__grid-cols-2 div   {height:35rem;}
+@media (max-width:1015px) {
+    .lg__grid-cols-2 div img {width: 0px; height: 0px;display: none;padding: 0px; margin: -100px;}
+    .lg__grid-cols-2 div   {height:43rem;}
+.lg__grid-cols-2 .imgRoom   {height:0rem;}
+}
 /* ============================================================
    ★  DOCTORS PAGE — WORLD CLASS DESIGN  ★
    ============================================================ */
@@ -3122,3 +3130,146 @@ body {
   .stats-grid { grid-template-columns: 1fr 1fr; }
   .admin-page-title { font-size: 20px; }
 }
+/* ============================================================
+   ★  RESTAURANT — قائمة الأسعار بالصور  ★
+   ============================================================ */
+
+.menu-images-card { border-top-color: #25d366 !important; }
+.menu-images-card::before { background: linear-gradient(to left, #25d366, #128c7e) !important; }
+
+.menu-images-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin: 1.25rem 0 1.75rem;
+}
+
+@media (max-width: 40rem) {
+  .menu-images-grid { grid-template-columns: 1fr; }
+}
+
+.menu-img-wrap {
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: 0 8px 28px rgba(0,0,0,0.12);
+  border: 3px solid #f3f4f6;
+  transition: transform 250ms ease, box-shadow 250ms ease, border-color 250ms ease;
+  cursor: zoom-in;
+}
+
+.menu-img-wrap:hover {
+  transform: scale(1.02);
+  box-shadow: 0 16px 48px rgba(192,57,43,0.18);
+  border-color: #c0392b;
+}
+
+.menu-img-wrap img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* WhatsApp Button */
+.whatsapp-order-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  padding: 1.1rem 2rem;
+  background: linear-gradient(135deg, #25d366, #128c7e);
+  color: white;
+  border-radius: 1rem;
+  font-size: 1.15rem;
+  font-weight: 800;
+  text-decoration: none;
+  transition: transform 200ms ease, box-shadow 200ms ease, filter 200ms ease;
+  box-shadow: 0 6px 24px rgba(37,211,102,0.4);
+}
+
+.whatsapp-order-btn:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 12px 36px rgba(37,211,102,0.5);
+  filter: brightness(1.06);
+}
+
+.whatsapp-order-btn i {
+  font-size: 1.6rem;
+}
+/* ============================================================
+   ★  RESTAURANT — قائمة الأسعار بالصور  ★
+   ============================================================ */
+
+.menu-images-card { border-top-color: #25d366 !important; }
+.menu-images-card::before { background: linear-gradient(to left, #25d366, #128c7e) !important; }
+
+.menu-images-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin: 1.25rem 0 1.75rem;
+}
+
+@media (max-width: 40rem) {
+  .menu-images-grid { grid-template-columns: 1fr; }
+}
+
+.menu-img-wrap {
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: 0 8px 28px rgba(0,0,0,0.12);
+  border: 3px solid #f3f4f6;
+  transition: transform 250ms ease, box-shadow 250ms ease, border-color 250ms ease;
+  cursor: zoom-in;
+}
+
+.menu-img-wrap:hover {
+  transform: scale(1.02);
+  box-shadow: 0 16px 48px rgba(192,57,43,0.18);
+  border-color: #c0392b;
+}
+
+.menu-img-wrap img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* WhatsApp Button */
+.whatsapp-order-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  padding: 1.1rem 2rem;
+  background: linear-gradient(135deg, #25d366, #128c7e);
+  color: white;
+  border-radius: 1rem;
+  font-size: 1.15rem;
+  font-weight: 800;
+  text-decoration: none;
+  transition: transform 200ms ease, box-shadow 200ms ease, filter 200ms ease;
+  box-shadow: 0 6px 24px rgba(37,211,102,0.4);
+}
+
+.whatsapp-order-btn:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 12px 36px rgba(37,211,102,0.5);
+  filter: brightness(1.06);
+}
+
+.whatsapp-order-btn i {
+  font-size: 1.6rem;
+}
+
+/* ── Coffee WhatsApp Button variant ── */
+.whatsapp-coffee-btn {
+  background: linear-gradient(135deg, #6f4e37, #a0714f) !important;
+  box-shadow: 0 6px 24px rgba(111,78,55,0.4) !important;
+}
+.whatsapp-coffee-btn:hover {
+  box-shadow: 0 12px 36px rgba(111,78,55,0.5) !important;
+}
+.menu-coffee-card { border-top-color: #6f4e37 !important; }
+.menu-coffee-card::before { background: linear-gradient(to left, #6f4e37, #a0714f) !important; }

@@ -33,25 +33,6 @@ block content
           circle(cx="100" cy="100" r="66" fill="#c0392b")
           circle(cx="100" cy="100" r="60" fill="#f9d84e")
 
-    //- //- ===== STATS BAR =====
-    //- section.stats-bar
-    //-   .stats-inner
-    //-     .stat-item
-    //-       span.stat-num 500+
-    //-       span.stat-label طلب يومياً
-    //-     .stat-divider
-    //-     .stat-item
-    //-       span.stat-num 4.9
-    //-       span.stat-label ⭐ تقييم العملاء
-    //-     .stat-divider
-    //-     .stat-item
-    //-       span.stat-num 15+
-    //-       span.stat-label صنف متنوع
-    //-     .stat-divider
-    //-     .stat-item
-    //-       span.stat-num 3
-    //-       span.stat-label سنوات خبرة
-
     //- ===== SIDEBAR + MAIN =====
     .content-wrapper
       aside.sidebar
@@ -190,30 +171,33 @@ block content
                 | رضا العملاء
               p تجربة راقية بطابع عالمي
 
-        //- //- Gallery
-        //- .content-card
-        //-   h2
-        //-     i(class="fa-solid fa-images" style="color:#c0392b; margin-left:8px;")
-        //-     | معرض الأطباق
-        //-   .restaurant-gallery
-        //-     .gallery-img(style="background:linear-gradient(135deg,#7b1010,#c0392b);")
-        //-       span.gallery-emoji 🍕
-        //-       span.gallery-label بيتزا مارغريتا
-        //-     .gallery-img(style="background:linear-gradient(135deg,#8b4513,#e67e22);")
-        //-       span.gallery-emoji 🍝
-        //-       span.gallery-label باستا بولونيز
-        //-     .gallery-img(style="background:linear-gradient(135deg,#5b0000,#8b1a1a);")
-        //-       span.gallery-emoji 🧀
-        //-       span.gallery-label بيتزا أربع جبن
-        //-     .gallery-img(style="background:linear-gradient(135deg,#b7860b,#f39c12);")
-        //-       span.gallery-emoji 🫙
-        //-       span.gallery-label صلصة طازجة
-        //-     .gallery-img(style="background:linear-gradient(135deg,#c0392b,#e74c3c);")
-        //-       span.gallery-emoji 🍷
-        //-       span.gallery-label مشروبات طازجة
-        //-     .gallery-img(style="background:linear-gradient(135deg,#6b3a2a,#c0392b);")
-        //-       span.gallery-emoji 🫕
-        //-       span.gallery-label باستا كريمي
+        //- ===== قائمة الطعام — صور + واتساب =====
+        .content-card.menu-images-card
+          h2
+            i(class="fa-solid fa-image" style="color:#c0392b; margin-left:8px;")
+            | قائمة الأسعار 🍕
+
+          .menu-images-grid
+            .menu-img-wrap
+              img(
+                src="./img/pazze (1).jpg"
+                alt="قائمة الطعام - الصفحة الأولى"
+                loading="lazy"
+              )
+            .menu-img-wrap
+              img(
+                src="./img/pazze (2).jpg"
+                alt="قائمة الطعام - الصفحة الثانية"
+                loading="lazy"
+              )
+
+          a.whatsapp-order-btn(
+            href="https://wa.me/201067174097?text=مرحباً،%20أريد%20الاستفسار%20عن%20قائمة%20الطعام%20والطلب%20من%20بيتزا%20آند%20باستا%20الباتيو%20مول"
+            target="_blank"
+            rel="noopener noreferrer"
+          )
+            i(class="fa-brands fa-whatsapp")
+            span اطلب عبر واتساب الآن
 
         //- Why Us
         .content-card
@@ -264,26 +248,6 @@ block content
               a.call-now-btn(href="tel:01067174097")
                 i(class="fa-solid fa-phone-volume" style="margin-left:8px;")
                 | اتصل الآن
-
-    //- ===== REVIEWS =====
-    //- section.reviews-section
-    //-   .reviews-inner
-    //-     h2.reviews-title
-    //-       i(class="fa-solid fa-comments" style="color:#c0392b; margin-left:8px;")
-    //-       | ماذا يقول عملاؤنا
-    //-     .reviews-grid
-    //-       .review-card
-    //-         .review-stars ⭐⭐⭐⭐⭐
-    //-         p.review-text "أحسن بيتزا أكلتها في حياتي، العجينة خفيفة والمكونات طازجة جداً!"
-    //-         .review-author — محمد أ.
-    //-       .review-card
-    //-         .review-stars ⭐⭐⭐⭐⭐
-    //-         p.review-text "الباستا كانت خرافية، والتوصيل وصل ساخن في أقل من 30 دقيقة!"
-    //-         .review-author — سارة م.
-    //-       .review-card
-    //-         .review-stars ⭐⭐⭐⭐⭐
-    //-         p.review-text "أكل راقي بسعر معقول، هنرجع تاني وتالت وعاشر مرة!"
-    //-         .review-author — أحمد ع.
 
     //- ===== CTA =====
     section.cta-section

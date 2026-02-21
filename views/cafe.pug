@@ -35,14 +35,10 @@ block content
             span.steam
             span.steam
 
-    //- ===== STATS BAR =====
-
-
     //- ===== SIDEBAR + MAIN =====
     .content-wrapper
       aside.sidebar
 
-        //- Drinks Menu
         .menu-card.coffee-menu-card
           h3.card-title
             i(class="fa-solid fa-mug-saucer" style="margin-left:8px;")
@@ -51,23 +47,18 @@ block content
             li
               i(class="fa-solid fa-mug-hot" style="color:#6f4e37; margin-left:6px;")
               span قهوة إسبريسو
-
             li
               i(class="fa-solid fa-mug-hot" style="color:#6f4e37; margin-left:6px;")
               span كابتشينو
-
             li
               i(class="fa-solid fa-mug-hot" style="color:#6f4e37; margin-left:6px;")
               span لاتيه
-
             li
               i(class="fa-solid fa-mug-hot" style="color:#6f4e37; margin-left:6px;")
               span موكا
-
             li
               i(class="fa-solid fa-leaf" style="color:#27ae60; margin-left:6px;")
               span شاي أخضر
-
             li
               i(class="fa-solid fa-leaf" style="color:#27ae60; margin-left:6px;")
               span شاي كرك
@@ -80,7 +71,6 @@ block content
             li
               i(class="fa-solid fa-blender" style="color:#3b82f6; margin-left:6px;")
               span فرابتشينو
-
             li
               i(class="fa-solid fa-glass-water" style="color:#3b82f6; margin-left:6px;")
               span آيس لاتيه
@@ -112,7 +102,6 @@ block content
               i(class="fa-solid fa-cookie-bite" style="color:#6f4e37; margin-left:6px;")
               span براونيز
 
-        //- Hours
         .menu-card.hours-card
           h3.card-title
             i(class="fa-solid fa-clock" style="margin-left:8px;")
@@ -128,7 +117,6 @@ block content
               i(class="fa-solid fa-circle" style="color:#22c55e; font-size:0.55rem;")
               | &nbsp;مفتوح الآن
 
-        //- Contact
         .menu-card.contact-card
           h3.card-title
             i(class="fa-solid fa-phone" style="margin-left:8px;")
@@ -176,6 +164,34 @@ block content
                 i(class="fa-solid fa-clock" style="color:#e67e22; margin-left:6px;")
                 | مواعيد مرنة
               p مفتوح لما تحتاجنا
+
+        //- ===== قائمة الأسعار — صور + واتساب =====
+        .content-card.menu-images-card.menu-coffee-card
+          h2
+            i(class="fa-solid fa-image" style="color:#6f4e37; margin-left:8px;")
+            | قائمة الأسعار ☕
+
+          .menu-images-grid
+            .menu-img-wrap
+              img(
+                src="./img/cafe (1).jpg"
+                alt="قائمة المقهى - الصفحة الأولى"
+                loading="lazy"
+              )
+            .menu-img-wrap
+              img(
+                src="./img/cafe (2).jpg"
+                alt="قائمة المقهى - الصفحة الثانية"
+                loading="lazy"
+              )
+
+          a.whatsapp-order-btn.whatsapp-coffee-btn(
+            href="https://wa.me/201102443884?text=مرحباً،%20أريد%20الاستفسار%20عن%20قائمة%20قهوة%20عمرو%20في%20الباتيو%20مول"
+            target="_blank"
+            rel="noopener noreferrer"
+          )
+            i(class="fa-brands fa-whatsapp")
+            span تواصل معنا على واتساب
 
         //- Atmosphere Gallery
         .content-card
@@ -270,26 +286,6 @@ block content
               a.call-now-btn(href="tel:01102443884")
                 i(class="fa-solid fa-phone-volume" style="margin-left:8px;")
                 | اتصل الآن
-
-    //- //- ===== REVIEWS =====
-    //- section.reviews-section.reviews-coffee
-    //-   .reviews-inner
-    //-     h2.reviews-title
-    //-       i(class="fa-solid fa-comments" style="color:#ffd166; margin-left:8px;")
-    //-       | ماذا يقول زوارنا
-    //-     .reviews-grid
-    //-       .review-card
-    //-         .review-stars ⭐⭐⭐⭐⭐
-    //-         p.review-text "أحلى كابتشينو شربته في حياتي، الجو رائع والخدمة ممتازة!"
-    //-         .review-author — نورا م.
-    //-       .review-card
-    //-         .review-stars ⭐⭐⭐⭐⭐
-    //-         p.review-text "بجي كل يوم أذاكر هنا، الواي فاي سريع والجو هادي ومريح جداً!"
-    //-         .review-author — عمر خ.
-    //-       .review-card
-    //-         .review-stars ⭐⭐⭐⭐⭐
-    //-         p.review-text "التشيز كيك والفرابتشينو تحفة! وسعر معقول جداً مقارنة بالجودة."
-    //-         .review-author — ياسمين أ.
 
     //- ===== CTA =====
     section.cta-section.cta-coffee

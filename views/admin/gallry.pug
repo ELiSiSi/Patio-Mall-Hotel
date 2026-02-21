@@ -1,0 +1,204 @@
+extends base
+
+block content
+  main.admin-main
+
+    //- ===== PAGE TITLE =====
+    .page-title-bar
+      .page-title-info
+        h1
+          i(class="fa-solid fa-images" style="margin-left:10px; color:#a855f7;")
+          | إدارة معرض الصور
+        p.page-subtitle إضافة وحذف صور معرض الباتيو مول
+
+      button.add-room-btn(onclick="openAddModal()" style="background:linear-gradient(135deg,#a855f7,#7c3aed); box-shadow:0 6px 20px rgba(168,85,247,0.4);")
+        i(class="fa-solid fa-plus")
+        span إضافة صورة جديدة
+
+    //- ===== STATS =====
+    .stats-grid
+      .stat-card.stat-total
+        .stat-icon(style="background:rgba(168,85,247,0.15); color:#a855f7;")
+          i(class="fa-solid fa-images")
+        .stat-info
+          span.stat-label إجمالي الصور
+          span.stat-value= gallries.length
+
+      .stat-card.stat-confirmed
+        .stat-icon
+          i(class="fa-solid fa-photo-film")
+        .stat-info
+          span.stat-label الصور المضافة
+          span.stat-value= gallries.length
+
+      .stat-card.stat-pending
+        .stat-icon
+          i(class="fa-solid fa-eye")
+        .stat-info
+          span.stat-label ظاهرة في الموقع
+          span.stat-value
+            if gallries.length > 0
+              | نعم ✓
+            else
+              | مخفية
+
+      .stat-card.stat-cancelled
+        .stat-icon
+          i(class="fa-solid fa-cloud-arrow-up")
+        .stat-info
+          span.stat-label آخر إضافة
+          span.stat-value
+            if gallries.length > 0
+              | #{gallries.length} صورة
+            else
+              | —
+
+    //- ===== GALLERY GRID =====
+    if gallries.length === 0
+      .empty-state(style="background:#1a1d27; border-radius:14px; border:1px solid rgba(255,255,255,0.07);")
+        i(class="fa-solid fa-images" style="opacity:0.3; color:#a855f7;")
+        p لا توجد صور في المعرض حتى الآن
+        button.add-room-btn(onclick="openAddModal()" style="margin:16px auto 0; display:inline-flex; background:linear-gradient(135deg,#a855f7,#7c3aed);")
+          i(class="fa-solid fa-plus")
+          span أضف أول صورة
+    else
+      .gallery-admin-grid#galleryGrid
+        each gallry, index in gallries
+          .gallery-admin-card(data-id=gallry._id)
+            .gallery-admin-img
+              img(src=gallry.image alt="صورة المعرض" loading="lazy")
+              .gallery-admin-num= index + 1
+              .gallery-admin-actions
+                a.gal-btn.gal-btn-view(href=gallry.image target="_blank" title="عرض الصورة")
+                  i(class="fa-solid fa-expand")
+                button.gal-btn.gal-btn-delete(title="حذف" onclick=`deleteGallery('${gallry._id}')`)
+                  i(class="fa-solid fa-trash")
+
+    //- ===== MODAL — ADD IMAGE =====
+    #galleryModal.modal-overlay(style="display:none;")
+      .modal-card
+        .modal-header
+          h3
+            i(class="fa-solid fa-image" style="margin-left:8px; color:#a855f7;")
+            | إضافة صورة جديدة
+          button.modal-close(onclick="closeModal()")
+            i(class="fa-solid fa-xmark")
+
+        .modal-body
+          //- URL input
+          .form-group
+            label(for="imageUrl")
+              i(class="fa-solid fa-link" style="margin-left:6px; color:#a855f7;")
+              | رابط الصورة (URL) *
+            .input-with-icon
+              input#imageUrl.form-input(
+                type="url"
+                placeholder="https://example.com/photo.jpg"
+                oninput="previewImage()"
+              )
+              i(class="fa-solid fa-link input-icon")
+
+          //- Preview
+          #previewWrap.gal-preview-wrap(style="display:none;")
+            p.gal-preview-label معاينة الصورة
+            .gal-preview-box
+              img#previewImg(src="" alt="معاينة")
+              .gal-preview-check
+                i(class="fa-solid fa-circle-check")
+                span الصورة تبدو ممتازة!
+
+          .modal-actions
+            button.modal-action-btn(type="button" onclick="saveImage()" style="background:rgba(168,85,247,0.15); color:#a855f7; border:1px solid #a855f7;")
+              i(class="fa-solid fa-floppy-disk")
+              span حفظ الصورة
+            button.modal-action-btn.btn-modal-cancel(type="button" onclick="closeModal()")
+              i(class="fa-solid fa-xmark")
+              span إلغاء
+
+    //- ===== TOAST =====
+    #toast-container
+
+  script.
+    // ── Toast ──
+    function showToast(message, type = 'info') {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+      toast.className = `toast toast-${type}`;
+      const icons = { error:'fa-circle-exclamation', warning:'fa-triangle-exclamation', success:'fa-circle-check', info:'fa-circle-info' };
+      toast.innerHTML = `<div class="toast-content"><i class="fa-solid ${icons[type]} toast-icon"></i><span class="toast-message">${message}</span></div><div class="toast-progress"></div>`;
+      container.appendChild(toast);
+      setTimeout(() => toast.classList.add('show'), 10);
+      setTimeout(() => { toast.classList.remove('show'); setTimeout(() => toast.remove(), 300); }, 4000);
+    }
+
+    // ── Open / Close Modal ──
+    function openAddModal() {
+      document.getElementById('imageUrl').value = '';
+      document.getElementById('previewWrap').style.display = 'none';
+      document.getElementById('previewImg').src = '';
+      document.getElementById('galleryModal').style.display = 'flex';
+      setTimeout(() => document.getElementById('imageUrl').focus(), 100);
+    }
+
+    function closeModal() {
+      document.getElementById('galleryModal').style.display = 'none';
+    }
+
+    document.getElementById('galleryModal').addEventListener('click', e => {
+      if (e.target === document.getElementById('galleryModal')) closeModal();
+    });
+
+    // ── Preview Image ──
+    function previewImage() {
+      const url = document.getElementById('imageUrl').value.trim();
+      const wrap = document.getElementById('previewWrap');
+      const img  = document.getElementById('previewImg');
+
+      if (!url) { wrap.style.display = 'none'; return; }
+
+      img.onload  = () => { wrap.style.display = 'block'; };
+      img.onerror = () => { wrap.style.display = 'none'; };
+      img.src = url;
+    }
+
+    // ── Save Image ──
+    async function saveImage() {
+      const url = document.getElementById('imageUrl').value.trim();
+      if (!url) { showToast('🔗 أدخل رابط الصورة', 'warning'); return; }
+
+      try {
+        const res = await fetch('/api/v1/gallry', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ image: url })
+        });
+        if (res.ok) {
+          showToast('✅ تمت إضافة الصورة للمعرض', 'success');
+          closeModal();
+          setTimeout(() => location.reload(), 1200);
+        } else {
+          const err = await res.json().catch(() => ({}));
+          showToast('❌ ' + (err.message || 'حدث خطأ'), 'error');
+        }
+      } catch { showToast('❌ تعذر الاتصال بالخادم', 'error'); }
+    }
+
+    // ── Delete Image ──
+    async function deleteGallery(id) {
+      if (!confirm('هل تريد حذف هذه الصورة نهائياً من المعرض؟')) return;
+      try {
+        const res = await fetch(`/api/v1/gallry/${id}`, { method: 'DELETE' });
+        if (res.ok) {
+          showToast('🗑️ تم حذف الصورة', 'success');
+          setTimeout(() => location.reload(), 1000);
+        } else {
+          showToast('حدث خطأ أثناء الحذف', 'error');
+        }
+      } catch { showToast('❌ تعذر الاتصال', 'error'); }
+    }
+
+    // ── Keyboard ──
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Enter' && document.getElementById('galleryModal').style.display === 'flex') saveImage();
+      if (e.key === 'Escape') closeModal();
+    });

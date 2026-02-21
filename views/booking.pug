@@ -54,7 +54,7 @@ block content
                   .type-icon
                     i(class="fa-solid fa-champagne-glasses")
                   h3 مناسبة خاصة
-                  p أفراح، خطوبة، أعياد ميلاد
+                  p  خطوبة، أعياد ميلاد
 
                 .type-card(data-type="cottage")
                   .type-icon
@@ -139,7 +139,6 @@ block content
                   label(for="eventType") نوع المناسبة *
                   select#eventType.form-select(name="eventType")
                     option(value="") -- اختر نوع المناسبة --
-                    option(value="wedding") حفل زفاف
                     option(value="engagement") خطوبة
                     option(value="birthday") عيد ميلاد
                     option(value="anniversary") ذكرى سنوية
@@ -227,6 +226,15 @@ block content
                     i(class="fa-solid fa-sparkles" style="margin-left:5px;")
                     | إضافات رومانسية
                   .checkbox-group
+                    label.checkbox-label
+                      input(type="checkbox" name="اقامه" value="yes")
+                      span اقامه
+                    label.checkbox-label
+                      input(type="checkbox" name="تصوير" value="yes")
+                      span تصوير
+                    label.checkbox-label
+                      input(type="checkbox" name="flowers" value="yes")
+                      span باقة ورد رومانسية
                     label.checkbox-label
                       input(type="checkbox" name="flowers" value="yes")
                       span باقة ورد رومانسية

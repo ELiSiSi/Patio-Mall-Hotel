@@ -17,6 +17,7 @@ import viewRouter from './routes/viewRouter.js';
 import AppError from './utils/appError.js';
 import bookingRouter from './routes/bookingRouter.js';
 import roomRouter from './routes/roomRouter.js';
+import gallryRouter from './routes/gallryRouter.js';
 
 const MONGO_URI = process.env.MONGO_URI;
 const app = express();
@@ -102,6 +103,7 @@ app.use('/', viewRouter);
 app.use('/admin', adminRouter);
 app.use('/api/v1/booking', bookingRouter);
 app.use('/api/v1/room', roomRouter);
+app.use('/api/v1/gallry', gallryRouter);
 
 // ===== 404 =====
 app.all('*', (req, res, next) => {

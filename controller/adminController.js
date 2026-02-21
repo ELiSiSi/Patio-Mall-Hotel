@@ -1,6 +1,7 @@
 import AppError from '../utils/appError.js';
 import Room from '../models/roomModel.js';
 import Booking from '../models/bookingModel.js';
+import Gallry from '../models/gallryModel.js';
 
 // adminPage -----------------------------------------------------------------------------------
 export const adminPage = async (req, res, next) => {
@@ -45,5 +46,16 @@ export const roomsPage = async (req, res, next) => {
   } catch (err) {
     console.error('Error in roomsPage:', err);
     return next(new AppError('خطاء في تحميل صفحة الغرف', 500));
+  }
+};
+
+// Gallry page -----------------------------------------------------------------------------------
+export const gallryPage = async (req, res, next) => {
+  try {
+    const gallries = await Gallry.find();
+    res.render('admin/gallry', { title: 'Gallry', gallries });
+  } catch (err) {
+    console.error('Error in gallryPage:', err);
+    return next(new AppError('خطاء في تحميل صفحة الصور', 500));
   }
 };

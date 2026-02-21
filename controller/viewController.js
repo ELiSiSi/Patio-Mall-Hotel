@@ -1,12 +1,15 @@
 import AppError from '../utils/appError.js';
 
-import  Room from '../models/roomModel.js';
+import Room from '../models/roomModel.js';
+import Gallry from '../models/gallryModel.js';
 
 // homepage -----------------------------------------------------------------------------------
 export const homepage = async (req, res, next) => {
   try {
+const gallries = await Gallry.find();
     res.status(200).render('home', {
       title: 'Home',
+      gallries
     });
   } catch (err) {
     return next(new AppError('No document found with that ID', 404));

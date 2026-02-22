@@ -1141,7 +1141,7 @@ footer .border-t { border-top: 1px solid #2d3555; }
 /* ── Gallery ── */
 .restaurant-gallery {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 0.75rem;
   margin-top: 1rem;
 }
